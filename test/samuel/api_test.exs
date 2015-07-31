@@ -7,12 +7,14 @@ defmodule Samuel.APITest do
   @opts API.init([])
 
   defp request(method, path, args \\ "")
+
   defp request(:post, path, args) do
     args = Poison.Encoder.encode(args, []) |> to_string
     conn(:post, path, args)
     |> put_req_header("content-type", "application/json")
     |> API.call(@opts)
   end
+
   defp request(method, path, args) do
     conn(method, path, args)
     |> API.call(@opts)
@@ -29,6 +31,7 @@ defmodule Samuel.APITest do
     should_match_body_to "We're ok."
   end
 
+
   with "non matching endpoint" do
     setup context do
       %{
@@ -38,13 +41,26 @@ defmodule Samuel.APITest do
     should_respond_with :missing
   end
 
+
   with "post /hook" do
-    setup context do
-      %{
-        connection: request(:post, "/hook", %{"hello" => "world"})
-      }
+    with "a known action" do
+      setup context do
+        %{
+          connection: request(:post, "/hook", %{"action" => "ping"})
+        }
+      end
+      should_respond_with :success
+      should_match_body_to "Thanks."
     end
-    should_respond_with :success
-    should_match_body_to "Thanks."
+
+    with "an unknown action" do
+      setup context do
+        %{
+          connection: request(:post, "/hook", %{"action" => "magic dancing unicorn"})
+        }
+      end
+      should_respond_with :bad_request
+      should_match_body_to "Unknown action: magic dancing unicorn"
+    end
   end
 end

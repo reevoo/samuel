@@ -1,4 +1,13 @@
 defmodule Samuel.API.Server do
+  @moduledoc """
+  This module exposes the `.start/0` function, which is a convienient way of
+  starting the application.
+  """
+
+  @doc """
+  Starts the application, including the API. The port used is taken from the
+  `port` environment variable.
+  """
   def start do
     {:ok, _} = Plug.Adapters.Cowboy.http(Samuel.API, [], port: port)
 
