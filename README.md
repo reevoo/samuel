@@ -11,6 +11,7 @@ And in future, he'll maybe do more.
 * Moan at you if you leave your pull requests open for a long time.
 * Have a cool logo.
 
+
 ## Install it
 
 ```sh
@@ -38,5 +39,7 @@ iex -S mix
 You can run the server from the REPL like this:
 
 ```elixir
-{:ok, _} = Plug.Adapters.Cowboy.http Samuel.API, []
+Samuel.API.Server.start
 ```
+
+Code is not automatically reloaded.
