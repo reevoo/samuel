@@ -1,0 +1,2 @@
+defmodule Samuel do
+end
