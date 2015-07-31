@@ -1,8 +1,10 @@
 defmodule Samuel.API do
   use Plug.Router
 
+  plug Plug.Parsers, parsers: [:json], json_decoder: Poison
   plug :match
   plug :dispatch
+
 
   post "/hook" do
     send_resp(conn, 200, "Thanks.")
