@@ -50,7 +50,7 @@ defmodule Samuel.APITest do
         }
       end
       should_respond_with :success
-      should_match_body_to "Thanks."
+      should_match_body_to "Pong!"
     end
 
     with "an unknown action" do
@@ -60,7 +60,7 @@ defmodule Samuel.APITest do
         }
       end
       should_respond_with :bad_request
-      should_match_body_to "Unknown action: magic dancing unicorn"
+      should_match_body_to "No action for magic dancing unicorn"
     end
   end
 end

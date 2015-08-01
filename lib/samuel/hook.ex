@@ -11,12 +11,18 @@ defmodule Samuel.Hook do
   end
 
   defp register("ping", _) do
-    :ok
+    {:ok, "Pong!"}
   end
   defp register("opened", _) do
-    :ok
+    {:ok, "No action taken for open."}
   end
-  defp register(_, _) do
-    :unknown_action
+  # A Pull Request 'merge' event occurs when the action is closed
+  # and "merged" is true on the Pull Request.
+  # https://developer.github.com/v3/activity/events/types/#pullrequestevent
+  defp register("closed", %{"pull_request" => %{"merged" => true}}) do
+    {:ok, "No action taken for merge."}
+  end
+  defp register(action, _) do
+    {:no_action, "No action for #{action}"}
   end
 end

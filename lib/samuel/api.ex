@@ -1,7 +1,7 @@
 defmodule Samuel.API do
   @moduledoc """
   Thin API layer on top of our application.
-  
+
   Does nothing other an recieve github webhooks and replies to status queries.
   """
 
@@ -15,10 +15,10 @@ defmodule Samuel.API do
 
   post "/hook" do
     case Hook.register(conn.body_params) do
-      :ok ->
-        send_resp(conn, 200, "Thanks.")
-      :unknown_action ->
-        send_resp(conn, 400, "Unknown action: #{conn.body_params["action"]}")
+      {:ok, msg} ->
+        send_resp(conn, 200, msg)
+      {:no_action, msg} ->
+        send_resp(conn, 400, msg)
     end
   end
 
