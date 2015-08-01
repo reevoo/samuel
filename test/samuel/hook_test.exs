@@ -18,7 +18,7 @@ defmodule Samuel.HookTest do
   end
 
   with "an unknown action" do
-    should "return :ok" do
+    should "return :unknown_action" do
       message = %{ "action" => "wibble wobble" }
       assert Hook.register( message ) == :unknown_action
     end
