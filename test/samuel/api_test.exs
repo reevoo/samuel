@@ -50,7 +50,6 @@ defmodule Samuel.APITest do
         }
       end
       should_respond_with :success
-      should_match_body_to "Pong!"
     end
 
     with "an unknown action" do
@@ -59,8 +58,7 @@ defmodule Samuel.APITest do
           connection: request(:post, "/hook", %{"action" => "magic dancing unicorn"})
         }
       end
-      should_respond_with :bad_request
-      should_match_body_to "No action for magic dancing unicorn"
+      should_respond_with :success
     end
   end
 end
