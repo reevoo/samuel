@@ -5,6 +5,7 @@ defmodule Samuel.Hook do
   Responds to a limited subset of github hook actions.
   """
 
+  alias Samuel.Actions.Commented
 
   def register(message) do
     register(message["action"], message)
@@ -20,7 +21,8 @@ defmodule Samuel.Hook do
   # and "merged" is true on the Pull Request.
   # https://developer.github.com/v3/activity/events/types/#pullrequestevent
   defp register("closed", %{"pull_request" => %{"merged" => true}}) do
-    {:ok, "No action taken for merge."}
+    Commented.check_and_act()
+    {:ok, "Merge checks done!"}
   end
   defp register(action, _) do
     {:no_action, "No action for #{action}"}
