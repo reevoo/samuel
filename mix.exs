@@ -14,7 +14,10 @@ defmodule Samuel.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [
+      applications: [:logger, :httpoison],
+      mod: {Samuel, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -33,6 +36,7 @@ defmodule Samuel.Mixfile do
       {:plug, "~> 0.13"},
       {:poison, "~> 1.4.0"},
       {:shouldi, only: :test},
+      {:httpoison, "~> 0.7"}
     ]
   end
 end
