@@ -16,7 +16,7 @@ defmodule Samuel.Dispatchers.Github do
     access_token = Application.get_env(:samuel, :github_access_key)
 
     HTTPoison.post!(
-      "https://api.github.com/repo/#{repo}/issues/#{pull_id}/comments",
+      "https://api.github.com/repos/#{repo}/issues/#{pull_id}/comments",
       Poison.Encoder.encode(%{ body: message }, []),
       %{
         "Authorization" => "token #{access_token}"

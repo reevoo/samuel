@@ -13,12 +13,17 @@ defmodule Samuel.Checks.HasComments do
   """
   def check(event) do
     num_comments = event["pull_request"]["comments"]
+    # TODO: There's more to it than this.
+    # We need to count the number of comments
+    # NOT made by samuel.
+    num_comments = event["pull_request"]["comments"]
     case num_comments do
       0 ->
         action(event)
       _ ->
         nil
     end
+    
   end
 
 
