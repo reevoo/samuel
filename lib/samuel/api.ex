@@ -7,8 +7,7 @@ defmodule Samuel.API do
 
   use Plug.Router
   alias Samuel.Checks
-  alias Samuel.Github
-  alias Samuel.Logger
+  alias Samuel.Dispatchers
 
   plug Plug.Parsers, parsers: [:json], json_decoder: Poison
   plug :match
@@ -20,8 +19,7 @@ defmodule Samuel.API do
     |> Checks.checks_for # Get checks for event
     |> Enum.map(fn(x) -> x.check(params) end) # Get check results
     |> Enum.filter(&(&1)) # Strip nils (pass)
-    #|> Logger.process_actions
-    |> Github.process_actions
+    |> Dispatchers.process_actions
     |> case do
       [] ->
         send_resp(conn, 200, "No actions.")

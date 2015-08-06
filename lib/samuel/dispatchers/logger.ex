@@ -1,4 +1,4 @@
-defmodule Samuel.Logger do
+defmodule Samuel.Dispatchers.Logger do
   @moduledoc """
   Basic logger.
   """
@@ -9,8 +9,6 @@ defmodule Samuel.Logger do
 
   defp log(action) do
     IO.inspect action
-
-    action
   end
 
 end

@@ -1,10 +1,10 @@
-defmodule Samuel.Github do
+defmodule Samuel.Dispatchers.Github do
   @moduledoc """
   Github interactions.
   """
 
   def process_actions(actions) do
-    Enum.map(actions, fn a -> apply(Samuel.Github, a[:action], [a]) end)
+    Enum.map(actions, fn a -> apply(Samuel.Dispatchers.Github, a[:action], [a]) end)
   end
 
   def post_comment(action) do
