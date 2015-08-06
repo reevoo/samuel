@@ -31,14 +31,14 @@ defmodule Samuel.Mixfile do
       # Web app router and server connector
       {:plug, "~> 0.13"},
       # JSON encoder/decoder
-      {:poison, "~> 1.4.0"},
+      {:poison, "~> 1.4"},
       # HTTP Client
       {:httpoison, "~> 0.7"},
 
       # BDD test framework
       {:shouldi, only: :test},
       # Automatic test runner
-      {:mix_test_watch, "~> 0.1.2", only: :dev},
+      {:mix_test_watch, "~> 0.1", only: :dev},
 
 
       # Markdown processor
@@ -47,6 +47,9 @@ defmodule Samuel.Mixfile do
       {:ex_doc, "~> 0.7", only: :dev},
       # Documentation inspector
       {:inch_ex, only: ~w(dev docs)a},
+
+      # Test mocking tool
+      {:mock, only: :test},
     ]
   end
 end
