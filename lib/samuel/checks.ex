@@ -9,6 +9,13 @@ defmodule Samuel.Checks do
     checks_for(message["action"], message)
   end
 
+  # When a PR is opened.
+  defp checks_for("opened", _) do
+    [
+      Samuel.Checks.Guidelines
+    ]
+  end
+
   # A Pull Request 'merge' event occurs when the action is closed
   # and "merged" is true on the Pull Request.
   # https://developer.github.com/v3/activity/events/types/#pullrequestevent

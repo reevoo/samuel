@@ -4,6 +4,10 @@ defmodule Samuel.Checks.HasComments do
   """
 
   def check(message) do
+
+    # TODO: There's more to it than this.
+    # We need to count the number of comments
+    # NOT made by samuel.
     num_comments = message["pull_request"]["comments"]
     case num_comments do
       0 ->
@@ -11,6 +15,7 @@ defmodule Samuel.Checks.HasComments do
       _ ->
         nil
     end
+    
   end
 
   def action(message) do
