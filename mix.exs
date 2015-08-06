@@ -31,12 +31,15 @@ defmodule Samuel.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:mix_test_watch, "~> 0.1.2", only: :dev},
       {:cowboy, "~> 1.0.0"},
       {:plug, "~> 0.13"},
       {:poison, "~> 1.4.0"},
+      {:httpoison, "~> 0.7"},
+
       {:shouldi, only: :test},
-      {:httpoison, "~> 0.7"}
+      {:mock, only: :test},
+
+      {:mix_test_watch, only: :dev},
     ]
   end
 end
