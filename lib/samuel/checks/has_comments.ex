@@ -4,47 +4,40 @@ defmodule Samuel.Checks.HasComments do
   """
 
   @doc """
-  Takes an event and returns a symbol that indicates whether it passes or fails
-  the check. i.e. whether it has more than one comment.
+  Takes an event and returns the action that needs to be taken, which could be
+  nothing (`nil`).
 
-      iex> Samuel.Checks.HasComments.check(
-      ...>   %{ "pull_request" => %{ "comments" => 0 } }
-      ...> )
-      :fail
-
-      iex> Samuel.Checks.HasComments.check(
-      ...>   %{ "pull_request" => %{ "comments" => 1 } }
-      ...> )
-      :pass
+      iex> event = %{ "pull_request" => %{ "comments" => 1 } }
+      iex> Samuel.Checks.HasComments.check(event)
+      nil
   """
   def check(event) do
     num_comments = event["pull_request"]["comments"]
     case num_comments do
       0 ->
-        :fail
+        action(event)
       _ ->
-        :pass
+        nil
     end
   end
 
 
   @doc """
-  Returns the action to be performed in the event that this check should be
-  failed.
-
-  The return value is a tuple with the action type in the first position, and
-  the args in the second.
+  Takes an event, and returns the action to be performed in the event that this
+  check should be failed for the event.
   """
-  def action do
-    {
-      :comment,
-      """
-      I don't see any comments on your Pull Request.
+  def action(event) do
+    %{
+      action: :post_comment,
+      repo: event["pull_request"]["repository"]["full_name"],
+      pull_id: event["pull_request"]["number"],
+      message: """
+        I don't see any comments on your Pull Request.
 
-      Are you too good for code reviews now?
-      No. No you aren't.
+        Are you too good for code reviews now?
+        No. No you aren't.
 
-      Maybe you forgot to say who reviewed it. That's fine, but let me know.
+        Maybe you forgot to say who reviewed it. That's fine, but let me know.
       """
     }
   end
