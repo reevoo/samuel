@@ -7,22 +7,24 @@ defmodule Samuel.Checks.HasComments do
     num_comments = message["pull_request"]["comments"]
     case num_comments do
       0 ->
-        :fail
+        action(message)
       _ ->
-        :pass
+        nil
     end
   end
 
-  def action(_) do
-    {
-      :comment,
-      """
-      I don't see any comments on your Pull Request.
+  def action(message) do
+    %{
+      action: :post_comment,
+      repo: message["pull_request"]["repository"]["full_name"],
+      pull_id: message["pull_request"]["number"],
+      message: """
+        I don't see any comments on your Pull Request.
 
-      Are you too good for code reviews now?
-      No. No you aren't.
+        Are you too good for code reviews now?
+        No. No you aren't.
 
-      Maybe you forgot to say who reviewed it. That's fine, but let me know.
+        Maybe you forgot to say who reviewed it. That's fine, but let me know.
       """
     }
   end
