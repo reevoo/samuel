@@ -5,8 +5,12 @@ defmodule Samuel.API.Server do
   """
 
   @doc """
-  Starts the application, including the API. The port used is taken from the
-  `port` environment variable.
+  Starts the application, including the API.
+  
+  The port used is taken from the `port` environment variable.
+
+  A shell script that starts the server in production mode can be found in
+  `bin/prod_run.sh`
   """
   def start do
     {:ok, _} = Plug.Adapters.Cowboy.http(Samuel.API, [], port: port)

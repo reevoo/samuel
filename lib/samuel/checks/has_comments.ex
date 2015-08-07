@@ -1,14 +1,22 @@
 defmodule Samuel.Checks.HasComments do
   @moduledoc """
-  Ensures a Pull Request has been commented on by at least one person.
+  A check ensures a Pull Request has been commented on by at least one person.
   """
 
   alias Samuel.Github
 
-  def check(message, http_client \\ HTTPoison) do
-    case other_user_comments(message) do
+  @doc """
+  Takes an event and returns the action that needs to be taken, which could be
+  nothing (`nil`).
+
+      iex> event = %{ "pull_request" => %{ "comments" => 1 } }
+      iex> Samuel.Checks.HasComments.check(event)
+      nil
+  """
+  def check(event, http_client \\ HTTPoison) do
+    case other_user_comments(event) do
       0 ->
-        action(message)
+        action(event)
       _ ->
         nil
     end
@@ -18,10 +26,10 @@ defmodule Samuel.Checks.HasComments do
   Returns the number of comments made by someone who is not the Pull Request
   author or Samuel.
   """
-  defp other_user_comments(message, http_client \\ HTTPoison) do
-    users_that_dont_count = users_that_dont_count(message)
+  defp other_user_comments(event, http_client \\ HTTPoison) do
+    users_that_dont_count = users_that_dont_count(event)
 
-    Github.get_comments(message["pull_request"]["comments_url"], http_client)
+    Github.get_comments(event["pull_request"]["comments_url"], http_client)
     |> Enum.map(fn(c) -> c["user"]["login"] end)
     |> Enum.filter(fn(u) ->
       Enum.all?(users_that_dont_count, fn(n) -> n != u end)
@@ -29,19 +37,22 @@ defmodule Samuel.Checks.HasComments do
     |> Enum.count
   end
 
-  @doc "Users whose comments should not be counted."
-  defp users_that_dont_count(message) do
+  defp users_that_dont_count(event) do
     [
       "reevoo-samuel",
-      message["pull_request"]["user"]["login"] # Author
+      event["pull_request"]["user"]["login"] # Author
     ]
   end
 
-  defp action(message) do
+  @doc """
+  Takes an event, and returns the action to be performed in the event that this
+  check should be failed for the event.
+  """
+  def action(event) do
     %{
       action: :post_comment,
-      repo: message["pull_request"]["repository"]["full_name"],
-      pull_id: message["pull_request"]["number"],
+      repo: event["pull_request"]["repository"]["full_name"],
+      pull_id: event["pull_request"]["number"],
       message: """
       I don't see any comments on your Pull Request.
 
