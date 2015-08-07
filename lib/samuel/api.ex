@@ -7,6 +7,7 @@ defmodule Samuel.API do
 
   use Plug.Router
   alias Samuel.Checks
+  alias Samuel.Dispatchers
 
   plug Plug.Parsers, parsers: [:json], json_decoder: Poison
   plug :match
@@ -15,10 +16,10 @@ defmodule Samuel.API do
   post "/hook" do
     params = conn.body_params
     params
-    |> Checks.checks_for
-    |> Enum.map(fn(x) -> x.check(params) end)
-    |> Enum.filter(&(&1)) # Strip nils
-    # Do the shit.
+    |> Checks.checks_for # Get checks for event
+    |> Enum.map(fn(x) -> x.check(params) end) # Get check results
+    |> Enum.filter(&(&1)) # Strip nils (pass)
+    |> Dispatchers.process_actions
     |> case do
       [] ->
         send_resp(conn, 200, "No actions.")

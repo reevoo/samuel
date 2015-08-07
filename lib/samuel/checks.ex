@@ -6,6 +6,10 @@ defmodule Samuel.Checks do
   Actions
   =======
 
+  ## Opened
+
+  Occures when a pull request is opened. Amazing!
+
   ## Closed
 
   Occures when a pull request is closed. If it is closed with a merge, then
@@ -23,6 +27,12 @@ defmodule Samuel.Checks do
   """
   def checks_for(event) do
     checks_for(event["action"], event)
+  end
+
+  defp checks_for("opened", _) do
+    [
+      Samuel.Checks.Guidelines
+    ]
   end
 
   defp checks_for("closed", %{"pull_request" => %{"merged" => true}}) do

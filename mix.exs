@@ -18,7 +18,10 @@ defmodule Samuel.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [
+      applications: [:logger, :httpoison],
+      mod: {Samuel, []}
+    ]
   end
 
   defp deps do
@@ -27,14 +30,21 @@ defmodule Samuel.Mixfile do
       {:cowboy, "~> 1.0.0"},
       # Web app router and server connector
       {:plug, "~> 0.13"},
-      # JSON encoder/decoder
       {:poison, "~> 1.4.0"},
+      {:httpoison, "~> 0.7"},
+
+      {:shouldi, only: :test},
+
+      {:mix_test_watch, only: :dev},
+      # JSON encoder/decoder
+      {:poison, "~> 1.4"},
+      # HTTP Client
+      {:httpoison, "~> 0.7"},
 
       # BDD test framework
       {:shouldi, only: :test},
       # Automatic test runner
-      {:mix_test_watch, "~> 0.1.2", only: :dev},
-
+      {:mix_test_watch, "~> 0.1", only: :dev},
 
       # Markdown processor
       {:earmark, "~> 0.1", only: :dev},
