@@ -20,7 +20,16 @@ mix deps.get        # Download the dependencies
 ```
 
 
-## Test it
+## Read the docs
+
+```sh
+mix doc             # Generate the docs
+open doc/index.html # View the docs
+mix inch            # See how the docs might be improved
+```
+
+
+## Run the tests
 
 ```sh
 mix test       # run tests once
@@ -28,7 +37,7 @@ mix test watch # run tests on file changes
 ```
 
 
-## Run it
+## Run the server
 
 Run the REPL.
 

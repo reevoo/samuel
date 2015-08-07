@@ -1,5 +1,6 @@
 defmodule Samuel.ChecksTest do
   use ShouldI
+  doctest Samuel.Checks
 
   alias Samuel.Checks
 
