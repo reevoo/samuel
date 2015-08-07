@@ -37,7 +37,6 @@ defmodule Samuel.Mixfile do
       {:httpoison, "~> 0.7"},
 
       {:shouldi, only: :test},
-      {:mock, only: :test},
 
       {:mix_test_watch, only: :dev},
     ]

@@ -6,6 +6,7 @@ defmodule Samuel.Checks.Guidelines do
   """
 
   alias Samuel.Action
+  alias Samuel.Github
 
   def check(message) do
     # Always add the action.
@@ -22,17 +23,7 @@ defmodule Samuel.Checks.Guidelines do
   end
 
   def guidelines do
-    access_token = Application.get_env(:samuel, :github_access_key)
-
-    response = HTTPoison.get!(
-      "https://api.github.com/repos/reevoo/guidelines/contents/pull_requests.md",
-      %{
-        "Authorization" => "token #{access_token}",
-        "Accept" => "application/vnd.github.v3.raw"
-      }
-    )
-
-    response.body
+    Github.get_raw_file("reevoo/guidelines", "pull_requests.md")
   end
 
 end
