@@ -5,15 +5,21 @@ defmodule Samuel.Checks.Guidelines do
   The guidelines are taken from Reevoo's Guidelines repository.
   """
 
+  @behaviour Samuel.Check
+
   alias Samuel.Action
   alias Samuel.Github
 
-  def check(message) do
+  def check(event) do
     # Always add the action.
+    action(event)
+  end
+
+  def action(event) do
     %Action{
       action: :post_comment,
-      repo: message["pull_request"]["repository"]["full_name"],
-      pull_id: message["pull_request"]["number"],
+      repo: event["pull_request"]["repository"]["full_name"],
+      pull_id: event["pull_request"]["number"],
       message: """
       Guidelines, mofo. Read them.
 
