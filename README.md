@@ -1,6 +1,9 @@
 Samuel
 ======
 
+[![Build Status](https://travis-ci.org/reevoo/samuel.svg?branch=master)](https://travis-ci.org/reevoo/samuel)
+[![Inline docs](http://inch-ci.org/github/reevoo/samuel.svg?branch=master&style=flat)](http://inch-ci.org/github/reevoo/samuel)
+
 Samuel is here to make sure your pull requests are all they can be. He will:
 
 * Post guidelines to your pull requests (soon)
