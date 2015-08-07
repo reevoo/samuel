@@ -4,8 +4,8 @@ defmodule Samuel.Checks.HasCommentsTest do
   alias Samuel.Checks.HasComments
 
   with "a pull request without comments" do
-    setup context do
-      Dict.put context, :pr, %{
+    setup event do
+      %{
         "action" => "closed",
         "pull_request" => %{
           "comments" => 0,
@@ -18,23 +18,23 @@ defmodule Samuel.Checks.HasCommentsTest do
       }
     end
 
-    should("return a post comment action", context) do
-      assert %{
-        action: :post_comment
-      } = HasComments.check(context[:pr])
+    should "return a post comment action", event do
+      action = HasComments.check(event)
+
+      assert action.action == :post_comment
     end
 
-    should("get the repo and pull request ID", context) do
-      assert %{
-        repo: "reevoo/samuel",
-        pull_id: 6
-      } = HasComments.check(context[:pr])
+    should "get the repo and pull request ID", event do
+      action = HasComments.check(event)
+
+      assert action.repo == "reevoo/samuel"
+      assert action.pull_id == 6
     end
   end
 
   with "a pull request with comments" do
-    setup context do
-      Dict.put context, :pr, %{
+    setup event do
+      %{
         "action" => "closed",
         "pull_request" => %{
           "comments" => 1,
@@ -43,8 +43,8 @@ defmodule Samuel.Checks.HasCommentsTest do
       }
     end
 
-    should("return nil", context) do
-      assert nil == HasComments.check(context[:pr])
+    should "return nil", event do
+      assert nil == HasComments.check(event)
     end
   end
 

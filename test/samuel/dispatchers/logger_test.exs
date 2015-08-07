@@ -1,6 +1,6 @@
 defmodule Samuel.Dispatchers.LoggerTest do
   use ShouldI
-  import Mock
+  import ExUnit.CaptureIO
 
   alias Samuel.Dispatchers.Logger
 
@@ -15,15 +15,13 @@ defmodule Samuel.Dispatchers.LoggerTest do
     end
 
     @tag :pending
-    should("log to IO", context) do
-      with_mock IO, [inspect: fn(_obj) -> nil end] do
-        Logger.process_actions(context[:actions])
-
-        # TODO: Mock provides incredibly unhelpful error messages.
-        # What's wrong with this?!
-        #
-        # assert called IO.inspect(context[:actions])
+    should "log to IO", context do
+      process = fn ->
+        Logger.process_actions(context.actions)
       end
+
+      # TODO: Sensibilise the message. (and the word sensibilise.)
+      assert capture_io(process) == inspect(hd(context.actions)) <> "\n"
     end
 
   end
