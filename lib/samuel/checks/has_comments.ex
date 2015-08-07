@@ -46,6 +46,10 @@ defmodule Samuel.Checks.HasComments do
     }
   end
 
+  def requirements do
+    ~w(comments)a
+  end
+
 
   # Returns the number of comments made by someone who is not the Pull Request
   # author or Samuel.
