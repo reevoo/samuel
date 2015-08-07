@@ -10,7 +10,7 @@ defmodule Samuel.DataCollectionTest do
 
   with "no checks" do
     should "return the event only" do
-      data = DataCollection.collect_for([], %{}, DummyHTTPClient)
+      data = DataCollection.get_requirements([], %{}, DummyHTTPClient)
       assert data.event == %{}
     end
   end
@@ -27,10 +27,10 @@ defmodule Samuel.DataCollectionTest do
     should "get comments from HTTP", event do
       checks = [
         %{
-          data_required: [:comments]
+          requirements: [:comments]
         }
       ]
-      data = DataCollection.collect_for(checks, event, DummyHTTPClient)
+      data = DataCollection.get_requirements(checks, event, DummyHTTPClient)
       assert data.comments == "DATA-FOR-COMMENTS-URL"
     end
   end

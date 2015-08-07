@@ -32,4 +32,7 @@ defmodule Samuel.Checks.Guidelines do
     Github.get_raw_file("reevoo/guidelines", "pull_requests.md")
   end
 
+  def requirements do
+    []
+  end
 end

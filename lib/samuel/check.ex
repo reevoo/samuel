@@ -5,13 +5,14 @@ defmodule Samuel.Check do
 
   use Behaviour
 
-  @type event  :: Map
-  @type action :: Map
+  @type pull_request_data :: Map
+  @type action      :: Map
+  @type requirement :: Atom
 
   @doc """
   A function that checks event data to see whether or not it passes the check.
   """
-  defcallback check(event)  :: none | action
+  defcallback check(pull_request_data)  :: none | action
 
 
   @doc """
@@ -20,5 +21,13 @@ defmodule Samuel.Check do
   
   It should not test to see if it fails or not.
   """
-  defcallback action(event) :: action
+  defcallback action(pull_request_data) :: action
+
+
+  @doc """
+  A function that returns a list of the requirements of the checker that must
+  be resolved and added to the `pull_request_data` before `check/1` has
+  sufficient data to run.
+  """
+  defcallback requirements :: [requirement]
 end
