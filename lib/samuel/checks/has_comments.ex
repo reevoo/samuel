@@ -23,7 +23,7 @@ defmodule Samuel.Checks.HasComments do
       _ ->
         nil
     end
-    
+
   end
 
 
@@ -37,12 +37,12 @@ defmodule Samuel.Checks.HasComments do
       repo: event["pull_request"]["repository"]["full_name"],
       pull_id: event["pull_request"]["number"],
       message: """
-        I don't see any comments on your Pull Request.
+      I don't see any comments on your Pull Request.
 
-        Are you too good for code reviews now?
-        No. No you aren't.
+      Are you too good for code reviews now?
+      No. No you aren't.
 
-        Maybe you forgot to say who reviewed it. That's fine, but let me know.
+      Maybe you forgot to say who reviewed it. That's fine, but let me know.
       """
     }
   end

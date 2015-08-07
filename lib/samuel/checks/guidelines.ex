@@ -5,16 +5,18 @@ defmodule Samuel.Checks.Guidelines do
   The guidelines are taken from Reevoo's Guidelines repository.
   """
 
+  alias Samuel.Action
+
   def check(message) do
     # Always add the action.
-    %{
+    %Action{
       action: :post_comment,
       repo: message["pull_request"]["repository"]["full_name"],
       pull_id: message["pull_request"]["number"],
       message: """
-        Guidelines, mofo. Read them.
+      Guidelines, mofo. Read them.
 
-        #{guidelines}
+      #{guidelines}
       """
     }
   end

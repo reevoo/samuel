@@ -3,13 +3,13 @@ defmodule Samuel.Dispatchers do
   Dispatchers listen to the reports from Checks and act on them.
   """
 
-  def process_actions(actions) do
-    dispatchers = [
-      Samuel.Dispatchers.Logger,
-      Samuel.Dispatchers.Github
-    ]
+  @dispatchers [
+    Samuel.Dispatchers.Logger,
+    Samuel.Dispatchers.Github
+  ]
 
-    Enum.map(dispatchers, fn d -> d.process_actions(actions) end)
+  def process_actions(actions) do
+    Enum.each(@dispatchers, fn d -> d.process_actions(actions) end)
   end
 
 end

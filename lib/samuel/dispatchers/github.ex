@@ -4,11 +4,11 @@ defmodule Samuel.Dispatchers.Github do
   """
 
   def process_actions(actions) do
-    Enum.map(actions, fn a -> apply(Samuel.Dispatchers.Github, a[:action], [a]) end)
+    Enum.map(actions, &process_action/1)
   end
 
-  def post_comment(action) do
-    post_comment(action[:repo], action[:pull_id], action[:message])
+  defp process_action(%{action: :post_comment} = action) do
+    post_comment(action.repo, action.pull_id, action.message)
   end
 
   # /repos/:owner/:repo/issues/:number/comments
