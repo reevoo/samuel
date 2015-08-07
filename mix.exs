@@ -40,16 +40,12 @@ defmodule Samuel.Mixfile do
       # Automatic test runner
       {:mix_test_watch, "~> 0.1", only: :dev},
 
-
       # Markdown processor
       {:earmark, "~> 0.1", only: :dev},
       # Documentation generator
       {:ex_doc, "~> 0.7", only: :dev},
       # Documentation inspector
       {:inch_ex, only: ~w(dev docs)a},
-
-      # Test mocking tool
-      {:mock, only: :test},
     ]
   end
 end
