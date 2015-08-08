@@ -4,10 +4,10 @@ defmodule Samuel.DataCollection do
   collects the data from the GitHub API HTTP client.
   """
 
-  def get_requirements(checks, event, http \\ HTTPoison) do
+  def resolve_requirements(checks, event, http \\ HTTPoison) do
     checks
     |> determine_requirements
-    |> fetch_all_requirements(event, http)
+    |> fetch_requirements(event, http)
   end
 
   def determine_requirements(checks) do
@@ -16,7 +16,7 @@ defmodule Samuel.DataCollection do
     |> Enum.uniq
   end
 
-  def fetch_all_requirements(requirements, event, http \\ HTTPoison) do
+  def fetch_requirements(requirements, event, http \\ HTTPoison) do
     requirements
     |> Enum.reduce(%{ event: event }, fn (req, acc) ->
       data = fetch(req, event, http)

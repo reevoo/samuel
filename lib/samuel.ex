@@ -1,4 +1,14 @@
 defmodule Samuel do
+  @moduledoc """
+  Samuel is here to make sure your pull requests are all they can be.
+
+  Don't piss him off.
+
+
+  The entry point to the application is through the API, which can be found in
+  the Samuel.API module.
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

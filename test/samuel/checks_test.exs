@@ -6,28 +6,28 @@ defmodule Samuel.ChecksTest do
 
   with "ping action" do
     should "return no checks" do
-      message = %{ "action" => "ping" }
-      assert [] = Checks.checks_for( message )
+      event = %{ "action" => "ping" }
+      assert [] = Checks.suitable_checks( event )
     end
   end
 
   with "an unknown action" do
     should "return no checks" do
-      message = %{ "action" => "wibble wobble" }
-      assert [] = Checks.checks_for( message )
+      event = %{ "action" => "wibble wobble" }
+      assert [] = Checks.suitable_checks( event )
     end
   end
 
   with "a merge" do
     should "returns checks" do
-      message = %{
+      event = %{
         "action" => "closed",
         "pull_request" => %{
           "merged" => true
         }
       }
 
-      checks = Checks.checks_for( message )
+      checks = Checks.suitable_checks( event )
       assert is_list( checks )
       assert length( checks ) > 0
     end
@@ -35,14 +35,14 @@ defmodule Samuel.ChecksTest do
 
   with "a non-merged close event" do
     should "return no checks" do
-      message = %{
+      event = %{
         "action" => "closed",
         "pull_request" => %{
           "merged" => false
         }
       }
 
-      assert [] = Checks.checks_for( message )
+      assert [] = Checks.suitable_checks( event )
     end
   end
 end

@@ -8,8 +8,13 @@ defmodule Samuel.Dispatchers do
     Samuel.Dispatchers.Github
   ]
 
-  def process_actions(actions) do
+  def perform_actions!(actions) do
+    actions = actions |> strip_nils
     Enum.each(@dispatchers, fn d -> d.process_actions(actions) end)
   end
 
+  defp strip_nils(list) do
+    list
+    |> Enum.filter(fn(x) -> x !== nil end)
+  end
 end

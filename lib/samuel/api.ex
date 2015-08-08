@@ -5,21 +5,19 @@ defmodule Samuel.API do
   Does nothing other an recieve github webhooks and replies to status queries.
   """
 
-  use Plug.Router
   alias Samuel.Checks
   alias Samuel.Dispatchers
+
+  use Plug.Router
 
   plug Plug.Parsers, parsers: [:json], json_decoder: Poison
   plug :match
   plug :dispatch
 
   post "/hook" do
-    params = conn.body_params
-    params
-    |> Checks.checks_for # Get checks for event
-    |> Enum.map(fn(x) -> x.check(params) end) # Get check results
-    |> Enum.filter(&(&1)) # Strip nils (pass)
-    |> Dispatchers.process_actions
+    conn.body_params
+    |> Checks.perform_checks
+    |> Dispatchers.perform_actions!
     |> case do
       [] ->
         send_resp(conn, 200, "No actions.")
