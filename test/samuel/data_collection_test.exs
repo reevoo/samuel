@@ -2,6 +2,8 @@ defmodule Samuel.DataCollectionTest do
   use ShouldI
   alias Samuel.DataCollection
 
+  doctest Samuel.DataCollection
+
   defmodule HTTPClient do
     def get!(url, _headers) do
       %{ body: "\"DATA-FOR-#{url}\"" }

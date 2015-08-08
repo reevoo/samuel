@@ -16,7 +16,7 @@ defmodule Samuel.Checks.HasComments do
       iex> Samuel.Checks.HasComments.check(event)
       nil
   """
-  def check(event, http_client \\ HTTPoison) do
+  def check(event) do
     case other_user_comments(event) do
       0 ->
         action(event)
