@@ -24,11 +24,12 @@
 #         # Can I split this up to pattern-match the args?
 #         # Then I could have several tests :)
 #         #
+#         # key = Application.get_env(:samuel, :github_access_key)
 #         # assert called HTTPoison.post(
 #         #   "https://api.github.com/repo/REPO/issues/123/comments",
 #         #   Poison.Encoder.encode(%{ body: "Hello, world!" }, []),
 #         #   %{
-#         #     "Authorization" => "token #{Application.get_env(:samuel, :github_access_key)}"
+#         #     "Authorization" => "token #{key}"
 #         #   }
 #         # )
 #       end

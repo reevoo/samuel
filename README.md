@@ -35,8 +35,9 @@ mix inch            # See how the docs might be improved
 ## Run the tests
 
 ```sh
-mix test       # run tests once
-mix test watch # run tests on file changes
+mix test       # Run tests once
+mix test watch # Run tests on file changes
+mix dogma      # Check for style violations
 ```
 
 

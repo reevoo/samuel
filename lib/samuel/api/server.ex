@@ -6,7 +6,7 @@ defmodule Samuel.API.Server do
 
   @doc """
   Starts the application, including the API.
-  
+
   The port used is taken from the `port` environment variable.
 
   A shell script that starts the server in production mode can be found in
@@ -18,7 +18,7 @@ defmodule Samuel.API.Server do
     IO.puts """
 
     I'll just walk the earth... You know, walk the earth, meet people...
-    Get into adventures. Like Caine from "Kung Fu."
+    Get into adventures. Like Caine from 'Kung Fu.'
 
     Running on port #{port}
     """

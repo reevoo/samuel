@@ -54,8 +54,9 @@ defmodule Samuel.APITest do
 
     with "an unknown action" do
       setup context do
+        con = request(:post, "/hook", %{"action" => "magic dancing unicorn"})
         %{
-          connection: request(:post, "/hook", %{"action" => "magic dancing unicorn"})
+          connection: con,
         }
       end
       should_respond_with :success

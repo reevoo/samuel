@@ -15,6 +15,7 @@ notifications:
 
 script:
   - mix test
+  - mix dogma
 
 after_script:
   - MIX_ENV=docs mix deps.get

@@ -39,6 +39,8 @@ defmodule Samuel.Mixfile do
       {:shouldi, "~> 0.2", only: :test},
       # Automatic test runner
       {:mix_test_watch, only: :dev},
+      # Style linter
+      {:dogma, only: ~w(dev test)a},
 
       # Markdown processor
       {:earmark, "~> 0.1", only: :dev},

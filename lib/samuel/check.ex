@@ -18,7 +18,7 @@ defmodule Samuel.Check do
   @doc """
   A function that returns the action that needs to be taken for an event,
   *presuming that the event fails the check*.
-  
+
   It should not test to see if it fails or not.
   """
   defcallback action(pull_request_data) :: action

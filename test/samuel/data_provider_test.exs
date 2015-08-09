@@ -6,7 +6,7 @@ defmodule Samuel.DataProviderTest do
 
   defmodule HTTPClient do
     def get!(url, _headers) do
-      %{ body: "\"DATA-FOR-#{url}\"" }
+      %{ body: ~s("DATA-FOR-#{url}") }
     end
   end
 
