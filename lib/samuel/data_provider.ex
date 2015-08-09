@@ -1,4 +1,4 @@
-defmodule Samuel.DataCollection do
+defmodule Samuel.DataProvider do
   @moduledoc """
   Determines the additional data required by the Checks for an event, and
   collects the data from the GitHub API via a HTTP client.
@@ -37,7 +37,7 @@ defmodule Samuel.DataCollection do
 
   The event is also added to the map.
 
-      iex> Samuel.DataCollection.fetch_requirements([], "An event!")
+      iex> Samuel.DataProvider.fetch_requirements([], "An event!")
       %{ event: "An event!" }
   """
   def fetch_requirements(requirements, event, http \\ HTTPoison) do

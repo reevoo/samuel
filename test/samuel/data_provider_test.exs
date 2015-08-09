@@ -1,8 +1,8 @@
-defmodule Samuel.DataCollectionTest do
+defmodule Samuel.DataProviderTest do
   use ShouldI
-  alias Samuel.DataCollection
+  alias Samuel.DataProvider
 
-  doctest Samuel.DataCollection
+  doctest Samuel.DataProvider
 
   defmodule HTTPClient do
     def get!(url, _headers) do
@@ -13,7 +13,7 @@ defmodule Samuel.DataCollectionTest do
   with "resolve_requirements/3" do
     with "no checks" do
       should "return the event only" do
-        data = DataCollection.resolve_requirements([], %{}, HTTPClient)
+        data = DataProvider.resolve_requirements([], %{}, HTTPClient)
         assert data.event == %{}
       end
     end
@@ -33,7 +33,7 @@ defmodule Samuel.DataCollectionTest do
             requirements: [:comments]
           }
         ]
-        data = DataCollection.resolve_requirements(checks, event, HTTPClient)
+        data = DataProvider.resolve_requirements(checks, event, HTTPClient)
         assert data.comments == "DATA-FOR-COMMENTS-URL"
       end
     end
@@ -47,7 +47,7 @@ defmodule Samuel.DataCollectionTest do
         %{ requirements: ~w(baz bun)a },
         %{ requirements: ~w(baz)a },
       ]
-      requirements = DataCollection.determine_requirements(checks)
+      requirements = DataProvider.determine_requirements(checks)
       assert requirements == ~w(foo bar baz bun)a
     end
   end
@@ -60,7 +60,7 @@ defmodule Samuel.DataCollectionTest do
           "comments_url" => "COMMENTS-URL"
         }
       }
-      data = DataCollection.fetch_requirements(requirements, event, HTTPClient)
+      data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
       assert data.comments == "DATA-FOR-COMMENTS-URL"
     end
   end
