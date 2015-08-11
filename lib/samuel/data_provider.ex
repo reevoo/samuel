@@ -53,7 +53,7 @@ defmodule Samuel.DataProvider do
     get(event["pull_request"]["comments_url"], http)
   end
 
-  defp fetch(:guidelines, event, http) do
+  defp fetch(:guidelines, _, http) do
     "https://api.github.com/repos/reevoo/guidelines/contents/pull_requests.md"
     |> get(%{ "Accept" => "application/vnd.github.v3.raw" }, http)
   end

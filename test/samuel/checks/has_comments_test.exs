@@ -1,72 +1,94 @@
-# defmodule Samuel.Checks.HasCommentsTest do
-#   use ShouldI
-#
-#   defmodule DummyHTTPClient do
-#
-#     def post!(url, body, headers) do
-#       IO.inspect %{
-#         url: url,
-#         body: body,
-#         headers: headers,
-#       }
-#     end
-#
-#     def get!(url, headers) do
-#       IO.inspect %{
-#         url: url,
-#         headers: headers,
-#       }
-#     end
-#
-#   end
-#
-#   alias Samuel.Checks.HasComments
-#
-#   with "a pull request without comments" do
-#     setup event do
-#       %{
-#         "action" => "closed",
-#         "pull_request" => %{
-#           "comments" => 0,
-#           "merged" => true,
-#           "number" => 6,
-#           "repository" => %{
-#             "full_name" => "reevoo/samuel"
-#           },
-#           "comments_url" => "GITHUB-COMMENTS-URL",
-#         }
-#       }
-#     end
-#
-#     should "return a post comment action", event do
-#       action = HasComments.check(event)
-#
-#       assert action.action == :post_comment
-#     end
-#
-#     should "get the repo and pull request ID", event do
-#       action = HasComments.check(event)
-#
-#       assert action.repo == "reevoo/samuel"
-#       assert action.pull_id == 6
-#     end
-#   end
-#
-#   with "a pull request with comments" do
-#     setup event do
-#       %{
-#         "action" => "closed",
-#         "pull_request" => %{
-#           "comments" => 1,
-#           "merged" => true,
-#           "comments_url" => "GITHUB-COMMENTS-URL",
-#         }
-#       }
-#     end
-#
-#     should "return nil", event do
-#       assert nil == HasComments.check(event)
-#     end
-#   end
-#
-# end
+defmodule Samuel.Checks.HasCommentsTest do
+  use ShouldI
+
+  alias Samuel.Checks.HasComments
+
+  with "a pull request without comments" do
+    setup data do
+      %{
+        event: %{
+          "action" => "closed",
+          "pull_request" => %{
+            "merged" => true,
+            "number" => 6,
+            "repository" => %{
+              "full_name" => "reevoo/samuel"
+            }
+          },
+        },
+        comments: [],
+      }
+    end
+
+    should "return a post comment action", data do
+      action = HasComments.check(data)
+
+      assert action.action == :post_comment
+    end
+
+    should "get the repo and pull request ID", data do
+      action = HasComments.check(data)
+
+      assert action.repo == "reevoo/samuel"
+      assert action.pull_id == 6
+    end
+  end
+
+  with "a pull request with comments from Samuel and the author" do
+    setup data do
+      %{
+        event: %{
+          "action" => "closed",
+          "pull_request" => %{
+            "merged" => true,
+            "number" => 6,
+            "repository" => %{
+              "full_name" => "reevoo/samuel"
+            },
+            "user" => %{
+              "login" => "AUTHOR"
+            }
+          },
+        },
+        comments: [
+          %{ "user" => %{ "login" => "reevoo-samuel" } },
+          %{ "user" => %{ "login" => "AUTHOR" } },
+        ],
+      }
+    end
+
+    should "return a post comment action", data do
+      action = HasComments.check(data)
+
+      assert action.action == :post_comment
+    end
+  end
+
+  with "a pull request with comments from others" do
+    setup data do
+      %{
+        event: %{
+          "action" => "closed",
+          "pull_request" => %{
+            "merged" => true,
+            "number" => 6,
+            "repository" => %{
+              "full_name" => "reevoo/samuel"
+            },
+            "user" => %{
+              "login" => "AUTHOR"
+            }
+          },
+        },
+        comments: [
+          %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
+        ],
+      }
+    end
+
+    should "return nil", event do
+      assert nil == HasComments.check(event)
+    end
+  end
+
+end

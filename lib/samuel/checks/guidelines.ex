@@ -8,7 +8,6 @@ defmodule Samuel.Checks.Guidelines do
   @behaviour Samuel.Check
 
   alias Samuel.Action
-  alias Samuel.Github
 
   def check(event) do
     # Always add the action.
@@ -23,16 +22,12 @@ defmodule Samuel.Checks.Guidelines do
       message: """
       Guidelines, mofo. Read them.
 
-      #{guidelines}
+      #{event.guidelines}
       """
     }
   end
 
-  def guidelines do
-    Github.get_raw_file("reevoo/guidelines", "pull_requests.md")
-  end
-
   def requirements do
-    []
+    ~w(guidelines)a
   end
 end
