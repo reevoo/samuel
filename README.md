@@ -4,15 +4,22 @@ Samuel
 [![Build Status](https://travis-ci.org/reevoo/samuel.svg?branch=master)](https://travis-ci.org/reevoo/samuel)
 [![Inline docs](http://inch-ci.org/github/reevoo/samuel.svg?branch=master&style=flat)](http://inch-ci.org/github/reevoo/samuel)
 
-Samuel is here to make sure your pull requests are all they can be. He will:
+Because some sucka's muckin' with our muckersuckin' code.
 
-* Post guidelines to your pull requests (soon)
+![Samuel watches over you.](/samuel.png)
 
-And in future, he'll maybe do more.
+Samuel is here to make sure your pull requests are all they can be.
 
+## Things He Can Do
+
+**Nothing; this is very early stages at the moment!**
+
+## What He Will Do In The Future
+
+* Post pull request guidelines to your pull request.
 * Moan at you if you merge your pull request without code reviews.
 * Moan at you if you leave your pull requests open for a long time.
-* Have a cool logo.
+* Moan at you if you commit directly to master.
 
 
 ## Install it
