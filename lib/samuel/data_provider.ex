@@ -53,14 +53,19 @@ defmodule Samuel.DataProvider do
     get(event["pull_request"]["comments_url"], http)
   end
 
-  defp get(url, http) do
-    access_token = Application.get_env(:samuel, :github_access_key)
-    response = http.get!(url,
-      %{
-        "Authorization" => "token #{access_token}",
-      }
-    )
+  defp fetch(:guidelines, event, http) do
+    "https://api.github.com/repos/reevoo/guidelines/contents/pull_requests.md"
+    |> get(%{ "Accept" => "application/vnd.github.v3.raw" }, http)
+  end
+
+  defp get(url, headers \\ %{}, http) do
+    headers = Map.merge(default_headers, headers)
+    response = http.get!(url, headers)
     Poison.Parser.parse!(response.body)
   end
 
+  defp default_headers do
+    access_token = Application.get_env(:samuel, :github_access_key)
+    %{ "Authorization" => "token #{access_token}" }
+  end
 end

@@ -39,6 +39,7 @@ defmodule Samuel.DataProviderTest do
     end
   end
 
+
   with "determine_requirements/1" do
     should "query the given checks for requirements, without dupes" do
       checks = [
@@ -52,16 +53,30 @@ defmodule Samuel.DataProviderTest do
     end
   end
 
+
   with "fetch_requirements/3" do
-    should "look up the comments URL from the event and fetch data" do
-      requirements = [:comments]
-      event = %{
-        "pull_request" => %{
-          "comments_url" => "COMMENTS-URL"
+    with "comments" do
+      should "look up the comments URL from the event and fetch data" do
+        requirements = [:comments]
+        event = %{
+          "pull_request" => %{
+            "comments_url" => "COMMENTS-URL"
+          }
         }
-      }
-      data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
-      assert data.comments == "DATA-FOR-COMMENTS-URL"
+        data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
+        assert data.comments == "DATA-FOR-COMMENTS-URL"
+      end
+    end
+
+    with "guidelines" do
+      should "look up the comments URL from the event and fetch data" do
+        requirements = [:guidelines]
+        event = nil
+        data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
+        assert data.guidelines == "DATA-FOR-https://api.github.com/repos/"
+                                  <> "reevoo/guidelines/contents/"
+                                  <> "pull_requests.md"
+      end
     end
   end
 end
