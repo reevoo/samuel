@@ -19,16 +19,10 @@ defmodule Samuel.Checks do
 
   @doc """
   Takes an event, and performs all suitable checks upon it.
-
-  TODO: We need to query the GitHub API for additional data on the pull
-  request. This isn't really the domain of this module, so we should create
-  some orchestration module that does this stuff and only uses this one to get
-  the suitable checks.
   """
-  def perform_checks(event) do
-    event
-    |> suitable_checks
-    |> Enum.map(fn(module) -> module.check(event) end)
+  def perform_checks(checks, %{event: _} = data) do
+    checks
+    |> Enum.map(fn(module) -> module.check(data) end)
   end
 
 

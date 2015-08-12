@@ -9,32 +9,20 @@ defmodule Samuel.Checks.Guidelines do
 
   alias Samuel.Action
 
-  def check(event) do
+  def check(data) do
     # Always add the action.
-    action(event)
+    action(data)
   end
 
-  # TODO: Use the guidelines from the event once the DataCollector
-  #       gets them for us.
-  def action(event) do
-    # %Action{
-    #   action: :post_comment,
-    #   repo: event["pull_request"]["repository"]["full_name"],
-    #   pull_id: event["pull_request"]["number"],
-    #   message: """
-    #   Guidelines, mofo. Read them.
-
-    #   #{event.guidelines}
-    #   """
-    # }
+  def action(data) do
     %Action{
       action: :post_comment,
-      repo: event["pull_request"]["repository"]["full_name"],
-      pull_id: event["pull_request"]["number"],
+      repo: data.event["pull_request"]["repository"]["full_name"],
+      pull_id: data.event["pull_request"]["number"],
       message: """
       Guidelines, mofo. Read them.
 
-      Our guidelines will go here.
+      #{data.guidelines}
       """
     }
   end

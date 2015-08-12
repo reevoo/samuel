@@ -6,6 +6,7 @@ defmodule Samuel.API do
   """
 
   alias Samuel.Checks
+  alias Samuel.DataProvider
   alias Samuel.Dispatchers
 
   use Plug.Router
@@ -15,8 +16,11 @@ defmodule Samuel.API do
   plug :dispatch
 
   post "/hook" do
-    conn.body_params
-    |> Checks.perform_checks
+    event  = conn.body_params
+    checks = event |> Checks.suitable_checks
+    data   = checks |> DataProvider.resolve_requirements(event)
+
+    Checks.perform_checks(checks, data)
     |> Dispatchers.perform_actions!
     |> case do
       [] ->

@@ -7,8 +7,8 @@ defmodule Samuel.Integration.GuidelinesTest do
   with "a pull request is opened" do
     setup context do
       mocks = [
-        get!:  fn(_)       -> "These are our guidelines." end,
-        post!: fn(_, _, _) -> "Thanks." end,
+        get!:  fn(_, _)    -> %{ body: ~s("These are our guidelines.") } end,
+        post!: fn(_, _, _) -> nil end,
       ]
       event = %{
         "action" => "opened",
@@ -27,7 +27,7 @@ defmodule Samuel.Integration.GuidelinesTest do
         API.request(:post, "/hook", context.event)
 
         x = "{\"body\":\"Guidelines, mofo. Read them.\\n\\n"
-          <> "Our guidelines will go here.\\n\"}"
+          <> "These are our guidelines.\\n\"}"
         assert called HTTPoison.post!(
           "https://api.github.com/repos/reevoo/samuel/issues/1/comments",
           %{ "Authorization" => "token TEST-GITHUB-ACCESS-KEY" },

@@ -19,15 +19,12 @@ defmodule Samuel.DataProviderTest do
     end
 
     with "comments" do
-      setup event do
-        %{
+      should "get comments from HTTP" do
+        event = %{
           "pull_request" => %{
             "comments_url" => "COMMENTS-URL"
           }
         }
-      end
-
-      should "get comments from HTTP", event do
         checks = [
           %{
             requirements: [:comments]
