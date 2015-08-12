@@ -1,30 +1,12 @@
 defmodule Samuel.APITest do
   use ShouldI
-  use Plug.Test
   import ShouldI.Matchers.Plug
-  alias Samuel.API
-
-  @opts API.init([])
-
-  defp request(method, path, args \\ "")
-
-  defp request(:post, path, args) do
-    args = Poison.Encoder.encode(args, []) |> to_string
-    conn(:post, path, args)
-    |> put_req_header("content-type", "application/json")
-    |> API.call(@opts)
-  end
-
-  defp request(method, path, args) do
-    conn(method, path, args)
-    |> API.call(@opts)
-  end
-
+  alias Samuel.TestHelpers.API
 
   with "get /status" do
     setup context do
       %{
-        connection: request(:get, "/status")
+        connection: API.request(:get, "/status")
       }
     end
     should_respond_with :success
@@ -35,7 +17,7 @@ defmodule Samuel.APITest do
   with "non matching endpoint" do
     setup context do
       %{
-        connection: request(:get, "/what-is-this?")
+        connection: API.request(:get, "/what-is-this?")
       }
     end
     should_respond_with :missing
@@ -46,7 +28,7 @@ defmodule Samuel.APITest do
     with "a known action" do
       setup context do
         %{
-          connection: request(:post, "/hook", %{"action" => "ping"})
+          connection: API.request(:post, "/hook", %{"action" => "ping"})
         }
       end
       should_respond_with :success
@@ -54,7 +36,7 @@ defmodule Samuel.APITest do
 
     with "an unknown action" do
       setup context do
-        con = request(:post, "/hook", %{"action" => "magic dancing unicorn"})
+        con = API.request(:post, "/hook", %{"action" => "magic dancing unicorn"})
         %{
           connection: con,
         }

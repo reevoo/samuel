@@ -37,6 +37,8 @@ defmodule Samuel.Mixfile do
 
       # BDD test macros
       {:shouldi, "~> 0.2", only: :test},
+      # Mocks. Duh.
+      {:mock, "~> 0.1", only: :test},
       # Automatic test runner
       {:mix_test_watch, only: :dev},
       # Style linter
