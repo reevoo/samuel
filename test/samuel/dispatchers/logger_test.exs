@@ -1,8 +1,6 @@
 defmodule Samuel.Dispatchers.LoggerTest do
   use ShouldI
-  import ExUnit.CaptureIO
-
-  alias Samuel.Dispatchers.Logger
+  # import ExUnit.CaptureIO
 
   with "an action" do
     setup context do
@@ -14,15 +12,15 @@ defmodule Samuel.Dispatchers.LoggerTest do
       }]
     end
 
-    @tag :pending
-    should "log to IO", context do
-      process = fn ->
-        Logger.process_actions(context.actions)
-      end
+    # TODO: Work out how we want to test this, and if we want it at all.
+    # should "log to IO", context do
+    #   process = fn ->
+    #     Logger.process_actions(context.actions)
+    #   end
 
-      # TODO: Sensibilise the message. (and the word sensibilise.)
-      assert capture_io(process) == inspect(hd(context.actions)) <> "\n"
-    end
+    #   # TODO: Sensibilise the message. (and the word sensibilise.)
+    #   assert capture_io(process) == inspect(hd(context.actions)) <> "\n"
+    # end
 
   end
 

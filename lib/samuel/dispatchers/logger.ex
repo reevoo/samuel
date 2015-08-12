@@ -1,14 +1,15 @@
 defmodule Samuel.Dispatchers.Logger do
   @moduledoc """
-  Basic logger.
+  Prints the actions to be taken to STDOUT.
   """
 
-  def process_actions(actions) do
-    Enum.map(actions, fn a -> log(a) end)
+  def process_actions(_actions) do
+    # Enum.each(actions, &log/1)
   end
 
-  defp log(action) do
-    IO.inspect action
-  end
+  # This is really annoying so I'm turning it off.
+  # defp log(action) do
+  #   IO.inspect action
+  # end
 
 end

@@ -36,7 +36,7 @@ defmodule Samuel.APITest do
 
     with "an unknown action" do
       setup context do
-        con = API.request(:post, "/hook", %{"action" => "magic dancing unicorn"})
+        con = API.request(:post, "/hook", %{"action" => "magic unicorn"})
         %{
           connection: con,
         }

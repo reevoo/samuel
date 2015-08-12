@@ -21,8 +21,9 @@
 #
 #   @doc "Gets all comments for a Pull Request."
 #   def get_comments(repo, pull_id) do
-#     "https://api.github.com/repos/#{repo}/issues/#{pull_id}/comments"
-#     |> get_comments
+#     get_comments(
+#       "https://api.github.com/repos/#{repo}/issues/#{pull_id}/comments"
+#     )
 #   end
 #
 #   def get_comments(url, http_client \\ HTTPoison) do

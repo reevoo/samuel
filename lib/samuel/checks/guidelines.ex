@@ -14,7 +14,19 @@ defmodule Samuel.Checks.Guidelines do
     action(event)
   end
 
+  # TODO: Use the guidelines from the event once the DataCollector
+  #       gets them for us.
   def action(event) do
+    # %Action{
+    #   action: :post_comment,
+    #   repo: event["pull_request"]["repository"]["full_name"],
+    #   pull_id: event["pull_request"]["number"],
+    #   message: """
+    #   Guidelines, mofo. Read them.
+
+    #   #{event.guidelines}
+    #   """
+    # }
     %Action{
       action: :post_comment,
       repo: event["pull_request"]["repository"]["full_name"],
@@ -22,7 +34,7 @@ defmodule Samuel.Checks.Guidelines do
       message: """
       Guidelines, mofo. Read them.
 
-      #{event.guidelines}
+      Our guidelines will go here.
       """
     }
   end
