@@ -3,6 +3,8 @@ defmodule Samuel.Dispatchers.Github do
   Github interactions.
   """
 
+  @behaviour Samuel.Dispatcher
+
   def process_actions(actions, http \\ HTTPoison) do
     Enum.map(actions, &process_action(&1, http))
   end

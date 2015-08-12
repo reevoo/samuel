@@ -4,9 +4,10 @@ defmodule Samuel.Check do
   """
 
   use Behaviour
+  alias Samuel.Action
 
   @type pull_request_data :: Map
-  @type action      :: Map
+  @type action      :: Action
   @type requirement :: Atom
 
   @doc """

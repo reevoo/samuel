@@ -1,8 +1,6 @@
 defmodule Samuel.Checks.Guidelines do
   @moduledoc """
-  Posts the guidelines to each Pull Request.
-
-  The guidelines are taken from Reevoo's Guidelines repository.
+  Posts the guidelines to each Pull Request when it is opened.
   """
 
   @behaviour Samuel.Check

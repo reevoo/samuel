@@ -15,6 +15,8 @@ defmodule Samuel.API do
   plug :match
   plug :dispatch
 
+  # Responds to a Github hook event.
+  # See https://developer.github.com/v3/activity/events/types/ for types.
   post "/hook" do
     event  = conn.body_params
     checks = event |> Checks.suitable_checks

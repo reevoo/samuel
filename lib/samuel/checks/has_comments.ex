@@ -5,15 +5,8 @@ defmodule Samuel.Checks.HasComments do
 
   @behaviour Samuel.Check
 
+  alias Samuel.Action
 
-  @doc """
-  Takes an event and returns the action that needs to be taken, which could be
-  nothing (`nil`).
-
-      iex> event = %{ "pull_request" => %{ "comments" => 1 } }
-      iex> Samuel.Checks.HasComments.check(event)
-      nil
-  """
   def check(data) do
     case other_user_comments(data) do
       0 ->
@@ -23,13 +16,8 @@ defmodule Samuel.Checks.HasComments do
     end
   end
 
-
-  @doc """
-  Takes an event, and returns the action to be performed in the event that this
-  check should be failed for the event.
-  """
   def action(event) do
-    %{
+    %Action{
       action: :post_comment,
       repo: event["pull_request"]["repository"]["full_name"],
       pull_id: event["pull_request"]["number"],
@@ -62,6 +50,7 @@ defmodule Samuel.Checks.HasComments do
     |> Enum.count
   end
 
+  # List of users whose comments do not count towards the comment count.
   defp users_that_dont_count(event) do
     [
       "reevoo-samuel",

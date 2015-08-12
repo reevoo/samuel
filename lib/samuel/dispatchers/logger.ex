@@ -3,6 +3,8 @@ defmodule Samuel.Dispatchers.Logger do
   Prints the actions to be taken to STDOUT.
   """
 
+  @behaviour Samuel.Dispatcher
+
   def process_actions(_actions) do
     # Enum.each(actions, &log/1)
   end
