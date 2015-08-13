@@ -47,7 +47,7 @@ defmodule Samuel.Mixfile do
       # Markdown processor
       {:earmark, "~> 0.1", only: :dev},
       # Documentation generator
-      {:ex_doc, "~> 0.7", only: :dev},
+      {:ex_doc, "~> 0.8", only: :dev},
       # Documentation inspector
       {:inch_ex, only: ~w(dev docs)a},
     ]
