@@ -30,7 +30,7 @@ defmodule Samuel.Integration.GuidelinesTest do
           <> "These are our guidelines.\\n\"}"
         assert called HTTPoison.post!(
           "https://api.github.com/repos/reevoo/samuel/issues/1/comments",
-          %{ "Authorization" => "token TEST-GITHUB-ACCESS-KEY" },
+          %{ "Authorization" => "token DUMMY-GITHUB-ACCESS-KEY" },
           x
         )
       end

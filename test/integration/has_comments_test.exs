@@ -30,7 +30,7 @@ defmodule Samuel.Integration.HasCommentsTest do
           get!: fn(_, _) -> %{ body: "[]" } end,
           post!: fn(url, headers, _) ->
             assert url == "https://api.github.com/repos/reevoo/samuel/issues/1/comments"
-            assert headers["Authorization"] == "token TEST-GITHUB-ACCESS-KEY"
+            assert headers["Authorization"] == "token DUMMY-GITHUB-ACCESS-KEY"
           end,
         ])
       end
@@ -48,7 +48,9 @@ defmodule Samuel.Integration.HasCommentsTest do
 
       setup context do
         Dict.put(context, :mocks, [
-          get!: fn(_, _) -> %{ body: ~s([{"user": {"login": "SOMEONE"}}]) } end,
+          get!: fn(_, _) ->
+            %{ body: ~s([{"user": {"login": "SOMEONE"}}]) }
+          end,
           post!: fn(_, _, _) ->
             assert false # We don't want a POST request!
           end,
