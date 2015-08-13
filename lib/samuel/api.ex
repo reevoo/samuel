@@ -3,6 +3,9 @@ defmodule Samuel.API do
   Thin API layer on top of our application.
 
   Does nothing other an recieve github webhooks and replies to status queries.
+
+  /hook Responds to Github hook events.
+  See https://developer.github.com/v3/activity/events/types/ for types.
   """
 
   alias Samuel.Checks
@@ -15,8 +18,6 @@ defmodule Samuel.API do
   plug :match
   plug :dispatch
 
-  # Responds to a Github hook event.
-  # See https://developer.github.com/v3/activity/events/types/ for types.
   post "/hook" do
     event  = conn.body_params
     checks = event |> Checks.suitable_checks

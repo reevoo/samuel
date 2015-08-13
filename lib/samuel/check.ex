@@ -7,7 +7,7 @@ defmodule Samuel.Check do
   alias Samuel.Action
 
   @type pull_request_data :: Map
-  @type action      :: Action
+  @type action      :: %Action{}
   @type requirement :: Atom
 
   @doc """

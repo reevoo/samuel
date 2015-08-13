@@ -7,7 +7,7 @@ defmodule Samuel.Dispatcher do
   use Behaviour
   alias Samuel.Action
 
-  @type action :: Action
+  @type action :: %Action{}
 
   @doc """
   A function that performs the given action.
