@@ -16,7 +16,7 @@ defmodule Samuel.Dispatchers.GithubTest do
     end
 
     should "send a POST request to the correct GitHub URL", context do
-      with_mock HTTPoison, [post!: fn(_, _, a) -> nil end] do
+      with_mock HTTPoison, [post!: fn(_, _, _) -> nil end] do
         Github.process_actions(context.actions)
 
         assert called HTTPoison.post!(
