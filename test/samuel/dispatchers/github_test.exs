@@ -22,7 +22,7 @@ defmodule Samuel.Dispatchers.GithubTest do
         assert called HTTPoison.post!(
           "https://api.github.com/repos/REPO/issues/123/comments",
           %{
-            "Authorization" => "token TEST-GITHUB-ACCESS-KEY"
+            "Authorization" => "token DUMMY-GITHUB-ACCESS-KEY"
           },
           "{\"body\":\"Hello, world!\"}"
         )
