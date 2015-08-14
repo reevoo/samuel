@@ -33,7 +33,7 @@ mix deps.get        # Download the dependencies
 ## Read the docs
 
 ```sh
-mix doc             # Generate the docs
+mix docs             # Generate the docs
 open doc/index.html # View the docs
 mix inch            # See how the docs might be improved
 ```
