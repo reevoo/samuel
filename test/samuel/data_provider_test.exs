@@ -5,8 +5,11 @@ defmodule Samuel.DataProviderTest do
   doctest Samuel.DataProvider
 
   defmodule HTTPClient do
-    def get!(url, _headers) do
-      %{ body: ~s("DATA-FOR-#{url}") }
+    def get!(url, _) do
+      %{
+        body: ~s(DATA-FOR-#{url}),
+        headers: [{ "Content-Type", "text/plain" }]
+      }
     end
   end
 
@@ -53,6 +56,16 @@ defmodule Samuel.DataProviderTest do
 
   with "fetch_requirements/3" do
     with "comments" do
+
+      defmodule JSONClient do
+        def get!(url, _) do
+          %{
+            body: ~s({ "url": "#{url}" }),
+            headers: [{ "Content-Type", "application/json" }]
+          }
+        end
+      end
+
       should "look up the comments URL from the event and fetch data" do
         requirements = [:comments]
         event = %{
@@ -60,17 +73,27 @@ defmodule Samuel.DataProviderTest do
             "comments_url" => "COMMENTS-URL"
           }
         }
-        data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
-        assert data.comments == "DATA-FOR-COMMENTS-URL"
+        data = DataProvider.fetch_requirements(requirements, event, JSONClient)
+        assert data.comments == %{"url" => "COMMENTS-URL"}
       end
     end
 
     with "guidelines" do
+
+      defmodule MarkdownClient do
+        def get!(url, _) do
+          %{
+            body: ~s(### This is the content for #{url}),
+            headers: [{ "Content-Type", "text/markdown" }]
+          }
+        end
+      end
+
       should "look up the comments URL from the event and fetch data" do
         requirements = [:guidelines]
         event = nil
-        data = DataProvider.fetch_requirements(requirements, event, HTTPClient)
-        assert data.guidelines == "DATA-FOR-https://api.github.com/repos/"
+        data = DataProvider.fetch_requirements(requirements, event, MarkdownClient)
+        assert data.guidelines == "### This is the content for https://api.github.com/repos/"
                                   <> "reevoo/guidelines/contents/"
                                   <> "pull_requests.md"
       end
