@@ -1,1 +1,1 @@
-web: mix serve
+web: mix serve $PORT
