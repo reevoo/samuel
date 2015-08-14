@@ -1,1 +1,1 @@
-web: bin/prod_run.sh PORT
+web: PORT=$PORT bin/prod_run.sh 
