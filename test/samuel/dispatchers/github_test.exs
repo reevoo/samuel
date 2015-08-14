@@ -17,7 +17,9 @@ defmodule Samuel.Dispatchers.GithubTest do
       mock = [
         post!: fn(url, _, headers) ->
           assert url == "https://api.github.com/repos/REPO/issues/123/comments"
-          assert headers == [{ "Authorization", "token DUMMY-GITHUB-ACCESS-KEY" }]
+          assert headers == [
+            { "Authorization", "token DUMMY-GITHUB-ACCESS-KEY" }
+          ]
         end
       ]
 

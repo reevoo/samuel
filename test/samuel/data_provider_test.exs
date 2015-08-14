@@ -92,10 +92,14 @@ defmodule Samuel.DataProviderTest do
       should "look up the comments URL from the event and fetch data" do
         requirements = [:guidelines]
         event = nil
-        data = DataProvider.fetch_requirements(requirements, event, MarkdownClient)
-        assert data.guidelines == "### This is the content for https://api.github.com/repos/"
-                                  <> "reevoo/guidelines/contents/"
-                                  <> "pull_requests.md"
+        data = DataProvider.fetch_requirements(
+          requirements,
+          event,
+          MarkdownClient
+        )
+        guidelines = "### This is the content for https://api.github.com/repos/"
+                  <> "reevoo/guidelines/contents/pull_requests.md"
+        assert data.guidelines == guidelines
       end
     end
   end
