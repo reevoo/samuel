@@ -1,0 +1,1 @@
+web: mix serve $PORT
