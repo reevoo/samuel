@@ -1,1 +1,1 @@
-web: mix serve $PORT
+web: bin/prod_run.sh PORT
