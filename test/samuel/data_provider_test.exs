@@ -61,7 +61,7 @@ defmodule Samuel.DataProviderTest do
         def get!(url, _) do
           %{
             body: ~s({ "url": "#{url}" }),
-            headers: [{ "Content-Type", "application/json" }]
+            headers: [{ "Content-Type", "application/json; charset=utf8" }]
           }
         end
       end
@@ -77,7 +77,7 @@ defmodule Samuel.DataProviderTest do
         assert data.comments == %{"url" => "COMMENTS-URL"}
       end
     end
-
+    
     with "guidelines" do
 
       defmodule MarkdownClient do
