@@ -50,7 +50,11 @@ defmodule Samuel.DataProvider do
 
 
   defp fetch(:comments, event, http) do
-    get(event["pull_request"]["comments_url"], http)
+    get(
+      event["pull_request"]["comments_url"],
+      %{"Content-Type" => "application/json"},
+      http
+    )
   end
 
   defp fetch(:guidelines, _, http) do
@@ -58,14 +62,33 @@ defmodule Samuel.DataProvider do
     |> get(%{ "Accept" => "application/vnd.github.v3.raw" }, http)
   end
 
-  defp get(url, headers \\ %{}, http) do
+  defp get(url, headers, http) do
     headers = Map.merge(default_headers, headers)
     response = http.get!(url, headers)
-    Poison.Parser.parse!(response.body)
+    parse(response.body, response.headers)
+  end
+
+  defp parse(body, headers) when is_list(headers) do
+    content_type = headers |> Enum.find_value(fn
+      {"Content-Type", type} -> type
+      _ -> nil
+    end)
+
+    parse(body, content_type)
+  end
+
+  defp parse(body, "application/json") do
+    Poison.Parser.parse!(body)
+  end
+
+  defp parse(body, _) do
+    body
   end
 
   defp default_headers do
     access_token = Application.get_env(:samuel, :github_access_key)
-    %{ "Authorization" => "token #{access_token}" }
+    %{
+      "Authorization" => "token #{access_token}"
+    }
   end
 end

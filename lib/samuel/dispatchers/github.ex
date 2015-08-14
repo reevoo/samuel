@@ -15,8 +15,10 @@ defmodule Samuel.Dispatchers.Github do
     pull = action.pull_id
     json = Poison.encode!(%{ body: action.message })
 
-    "https://api.github.com/repos/#{repo}/issues/#{pull}/comments"
-    |> http.post!(auth_headers, json)
+    response = "https://api.github.com/repos/#{repo}/issues/#{pull}/comments"
+    |> http.post!(json, auth_headers)
+
+    response
   end
 
   defp access_token do
@@ -24,6 +26,6 @@ defmodule Samuel.Dispatchers.Github do
   end
 
   defp auth_headers do
-    %{ "Authorization" => "token #{access_token}" }
+    [{ "Authorization", "token #{access_token}" }]
   end
 end

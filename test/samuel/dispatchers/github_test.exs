@@ -7,25 +7,27 @@ defmodule Samuel.Dispatchers.GithubTest do
 
   with "post comment action" do
     setup context do
-      Dict.put context, :actions, [%Action{
+      actions = [%Action{
         action: :post_comment,
         repo: "REPO",
         pull_id: 123,
         message: "Hello, world!"
       }]
+
+      mock = [
+        post!: fn(url, _, headers) ->
+          assert url == "https://api.github.com/repos/REPO/issues/123/comments"
+          assert headers == [{ "Authorization", "token DUMMY-GITHUB-ACCESS-KEY" }]
+        end
+      ]
+
+      %{ actions: actions, mock: mock }
     end
 
     should "send a POST request to the correct GitHub URL", context do
-      with_mock HTTPoison, [post!: fn(_, _, _) -> nil end] do
+      with_mock HTTPoison, context.mock do
         Github.process_actions(context.actions)
-
-        assert called HTTPoison.post!(
-          "https://api.github.com/repos/REPO/issues/123/comments",
-          %{
-            "Authorization" => "token DUMMY-GITHUB-ACCESS-KEY"
-          },
-          "{\"body\":\"Hello, world!\"}"
-        )
+        # Assertions in mock
       end
     end
 
