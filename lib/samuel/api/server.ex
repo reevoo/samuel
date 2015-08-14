@@ -12,7 +12,7 @@ defmodule Samuel.API.Server do
   A shell script that starts the server in production mode can be found in
   `bin/prod_run.sh`
   """
-  def start do
+  def start(port \\ 4000) do
     {:ok, _} = Plug.Adapters.Cowboy.http(Samuel.API, [], port: port)
 
     IO.puts """
@@ -33,9 +33,5 @@ defmodule Samuel.API.Server do
     unless iex_running? do
       :timer.sleep :infinity
     end
-  end
-
-  defp port do
-    System.get_env("PORT") || 4000
   end
 end
