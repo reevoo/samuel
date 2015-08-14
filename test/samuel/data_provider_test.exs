@@ -57,7 +57,7 @@ defmodule Samuel.DataProviderTest do
   with "fetch_requirements/3" do
     with "comments" do
 
-      defmodule JsonClient do
+      defmodule JSONClient do
         def get!(url, _) do
           %{
             body: ~s({ "url": "#{url}" }),
@@ -73,7 +73,7 @@ defmodule Samuel.DataProviderTest do
             "comments_url" => "COMMENTS-URL"
           }
         }
-        data = DataProvider.fetch_requirements(requirements, event, JsonClient)
+        data = DataProvider.fetch_requirements(requirements, event, JSONClient)
         assert data.comments == %{"url" => "COMMENTS-URL"}
       end
     end
