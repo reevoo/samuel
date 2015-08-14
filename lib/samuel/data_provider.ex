@@ -61,11 +61,22 @@ defmodule Samuel.DataProvider do
   defp get(url, headers \\ %{}, http) do
     headers = Map.merge(default_headers, headers)
     response = http.get!(url, headers)
-    Poison.Parser.parse!(response.body)
+    parse(response.body, response.headers)
+  end
+
+  defp parse(body, %{"Content-Type" => "application/json"}) do
+    Poison.Parser.parse!(body)
+  end
+
+  defp parse(body, _) do
+    body
   end
 
   defp default_headers do
     access_token = Application.get_env(:samuel, :github_access_key)
-    %{ "Authorization" => "token #{access_token}" }
+    %{
+      "Authorization" => "token #{access_token}",
+      "Content-Type" => "application/json"
+    }
   end
 end

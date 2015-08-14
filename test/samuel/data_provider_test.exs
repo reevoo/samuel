@@ -5,8 +5,11 @@ defmodule Samuel.DataProviderTest do
   doctest Samuel.DataProvider
 
   defmodule HTTPClient do
-    def get!(url, _headers) do
-      %{ body: ~s("DATA-FOR-#{url}") }
+    def get!(url, headers) do
+      %{
+        body: ~s("DATA-FOR-#{url}"),
+        headers: headers
+      }
     end
   end
 
