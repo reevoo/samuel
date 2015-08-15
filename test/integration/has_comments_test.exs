@@ -32,8 +32,11 @@ defmodule Samuel.Integration.HasCommentsTest do
             headers: [{"Content-Type", "application/json"}]
           } end,
           post!: fn(url, _, headers) ->
-            assert url == "https://api.github.com/repos/reevoo/samuel/issues/1/comments"
-            assert headers == [{"Authorization", "token DUMMY-GITHUB-ACCESS-KEY"}]
+            assert url == "https://api.github.com/"
+                          <> "repos/reevoo/samuel/issues/1/comments"
+            assert headers == [
+              {"Authorization", "token DUMMY-GITHUB-ACCESS-KEY"}
+            ]
           end,
         ])
       end

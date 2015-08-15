@@ -12,7 +12,8 @@ defmodule Samuel.Integration.GuidelinesTest do
           headers: %{"Content-Type" => "text/plain"}
         } end,
         post!: fn(url, _, headers) ->
-          assert url == "https://api.github.com/repos/reevoo/samuel/issues/1/comments"
+          assert url == "https://api.github.com/"
+                        <> "repos/reevoo/samuel/issues/1/comments"
           assert headers == [{"Authorization", "token DUMMY-GITHUB-ACCESS-KEY"}]
         end,
       ]
