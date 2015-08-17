@@ -77,30 +77,5 @@ defmodule Samuel.DataProviderTest do
         assert data.comments == %{"url" => "COMMENTS-URL"}
       end
     end
-    
-    with "guidelines" do
-
-      defmodule MarkdownClient do
-        def get!(url, _) do
-          %{
-            body: ~s(### This is the content for #{url}),
-            headers: [{ "Content-Type", "text/markdown" }]
-          }
-        end
-      end
-
-      should "look up the comments URL from the event and fetch data" do
-        requirements = [:guidelines]
-        event = nil
-        data = DataProvider.fetch_requirements(
-          requirements,
-          event,
-          MarkdownClient
-        )
-        guidelines = "### This is the content for https://api.github.com/repos/"
-                  <> "reevoo/guidelines/contents/pull_requests.md"
-        assert data.guidelines == guidelines
-      end
-    end
   end
 end
