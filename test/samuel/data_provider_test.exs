@@ -61,7 +61,7 @@ defmodule Samuel.DataProviderTest do
         def get!(url, _) do
           %{
             body: ~s({ "url": "#{url}" }),
-            headers: [{ "Content-Type", "application/json" }]
+            headers: [{ "Content-Type", "application/json; charset=utf8" }]
           }
         end
       end
@@ -79,16 +79,6 @@ defmodule Samuel.DataProviderTest do
     end
 
     with "guidelines" do
-
-      defmodule MarkdownClient do
-        def get!(url, _) do
-          %{
-            body: ~s(### This is the content for #{url}),
-            headers: [{ "Content-Type", "text/markdown" }]
-          }
-        end
-      end
-
       should "look up the comments URL from the event and fetch data" do
         requirements = [:guidelines]
         event = nil
@@ -97,9 +87,7 @@ defmodule Samuel.DataProviderTest do
           event,
           MarkdownClient
         )
-        guidelines = "### This is the content for https://api.github.com/repos/"
-                  <> "reevoo/guidelines/contents/pull_requests.md"
-        assert data.guidelines == guidelines
+        assert data.guidelines == Application.get_env(:samuel, :guidelines_message)
       end
     end
   end

@@ -57,14 +57,14 @@ defmodule Samuel.DataProvider do
     )
   end
 
-  defp fetch(:guidelines, _, http) do
-    "https://api.github.com/repos/reevoo/guidelines/contents/pull_requests.md"
-    |> get(%{ "Accept" => "application/vnd.github.v3.raw" }, http)
+  defp fetch(:guidelines, _, _) do
+    Application.get_env(:samuel, :guidelines_message)
   end
 
   defp get(url, headers, http) do
     headers = Map.merge(default_headers, headers)
     response = http.get!(url, headers)
+
     parse(response.body, response.headers)
   end
 
@@ -77,7 +77,7 @@ defmodule Samuel.DataProvider do
     parse(body, content_type)
   end
 
-  defp parse(body, "application/json") do
+  defp parse(body, << "application/json"::utf8, _::binary >>) do
     Poison.Parser.parse!(body)
   end
 

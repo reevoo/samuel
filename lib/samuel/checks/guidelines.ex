@@ -18,15 +18,12 @@ defmodule Samuel.Checks.Guidelines do
       action: :post_comment,
       repo: data.event["repository"]["full_name"],
       pull_id: data.event["pull_request"]["number"],
-      message: """
-      Guidelines, mofo. Read them.
-
-      #{data.guidelines}
-      """
+      message: data.guidelines
     }
   end
 
   def requirements do
     ~w(guidelines)a
   end
+  
 end
