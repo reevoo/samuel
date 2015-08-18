@@ -77,5 +77,18 @@ defmodule Samuel.DataProviderTest do
         assert data.comments == %{"url" => "COMMENTS-URL"}
       end
     end
+
+    with "guidelines" do
+      should "look up the comments URL from the event and fetch data" do
+        requirements = [:guidelines]
+        event = nil
+        data = DataProvider.fetch_requirements(
+          requirements,
+          event,
+          MarkdownClient
+        )
+        assert data.guidelines == Application.get_env(:samuel, :guidelines_message)
+      end
+    end
   end
 end

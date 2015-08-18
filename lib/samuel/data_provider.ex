@@ -57,6 +57,10 @@ defmodule Samuel.DataProvider do
     )
   end
 
+  defp fetch(:guidelines, _, _) do
+    Application.get_env(:samuel, :guidelines_message)
+  end
+
   defp get(url, headers, http) do
     headers = Map.merge(default_headers, headers)
     response = http.get!(url, headers)
