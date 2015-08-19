@@ -72,6 +72,15 @@ git remote add heroku [HEROKU_URL]
 git push heroku master
 ```
 
+## Use it
+
+Go to your repo's settings
+Click on the 'Webhooks & Services tab' and then 'Add webhook'.
+
+Then configure it like this, replacing YOUR_SAMUEL_URL with the url of your samuel instance.
+
+![Samuel settings](docs/samuel_setup.png  )
+
 ## LICENCE
 
 ```
