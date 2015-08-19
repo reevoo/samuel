@@ -10,7 +10,9 @@ defmodule Samuel.Mixfile do
       homepage_url: "https://github.com/reevoo/samuel",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
-      deps: deps
+      deps: deps,
+      default_task: "default",
+      preferred_cli_env: [default: :test]
     ]
   end
 
