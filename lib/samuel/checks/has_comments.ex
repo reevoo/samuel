@@ -19,7 +19,7 @@ defmodule Samuel.Checks.HasComments do
   def action(event) do
     %Action{
       action: :post_comment,
-      repo: event["pull_request"]["repository"]["full_name"],
+      repo: event["repository"]["full_name"],
       pull_id: event["pull_request"]["number"],
       message: """
       I don't see any comments on your Pull Request.

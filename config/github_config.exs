@@ -1,8 +1,8 @@
 use Mix.Config
 
 github_access_key = case Mix.env do
-  :prod     -> System.get_env "GITHUB_ACCESS_KEY"
-  otherwise -> "DUMMY-GITHUB-ACCESS-KEY"
+  :test     -> "DUMMY-GITHUB-ACCESS-KEY"
+  otherwise -> System.get_env "GITHUB_ACCESS_KEY"
 end
 
 config :samuel,

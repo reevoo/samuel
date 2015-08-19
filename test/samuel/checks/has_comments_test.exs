@@ -10,11 +10,11 @@ defmodule Samuel.Checks.HasCommentsTest do
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6,
-            "repository" => %{
-              "full_name" => "reevoo/samuel"
-            }
+            "number" => 6
           },
+          "repository" => %{
+            "full_name" => "reevoo/samuel"
+          }
         },
         comments: [],
       }
@@ -42,13 +42,13 @@ defmodule Samuel.Checks.HasCommentsTest do
           "pull_request" => %{
             "merged" => true,
             "number" => 6,
-            "repository" => %{
-              "full_name" => "reevoo/samuel"
-            },
             "user" => %{
               "login" => "AUTHOR"
             }
           },
+          "repository" => %{
+            "full_name" => "reevoo/samuel"
+          }
         },
         comments: [
           %{ "user" => %{ "login" => "reevoo-samuel" } },
@@ -72,13 +72,13 @@ defmodule Samuel.Checks.HasCommentsTest do
           "pull_request" => %{
             "merged" => true,
             "number" => 6,
-            "repository" => %{
-              "full_name" => "reevoo/samuel"
-            },
             "user" => %{
               "login" => "AUTHOR"
             }
           },
+          "repository" => %{
+            "full_name" => "reevoo/samuel"
+          }
         },
         comments: [
           %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
