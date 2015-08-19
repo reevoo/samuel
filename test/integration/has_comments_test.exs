@@ -11,14 +11,14 @@ defmodule Samuel.Integration.HasCommentsTest do
         "action" => "closed",
         "pull_request" => %{
           "merged" => true,
-          "repository" => %{
-            "full_name" => "reevoo/samuel",
-          },
           "number" => "1",
           "user" => %{
             "login" => "AUTHOR"
           }
         },
+        "repository" => %{
+          "full_name" => "reevoo/samuel",
+        }
       }
       %{ event: event }
     end
