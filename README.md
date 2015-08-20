@@ -41,6 +41,7 @@ mix inch            # See how the docs might be improved
 ## Run the tests
 
 ```sh
+mix            # Run the tests and the dogma style checker
 mix test       # Run tests once
 mix test watch # Run tests on file changes
 mix dogma      # Check for style violations
