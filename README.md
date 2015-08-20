@@ -53,7 +53,7 @@ mix dogma      # Check for style violations
 Run the REPL.
 
 ```sh
-iex -S mix
+bin/prod_run.sh
 ```
 
 You can run the server from the REPL like this:
