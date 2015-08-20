@@ -13,10 +13,10 @@ Samuel is here to make sure your pull requests are all they can be.
 ## Things He Can Do
 
 * Post pull request guidelines to your pull request.
+* Moan at you if you merge your pull request without code review.
 
 ## What He Will Do In The Future
 
-* Moan at you if you merge your pull request without code reviews.
 * Moan at you if you leave your pull requests open for a long time.
 * Moan at you if you commit directly to master.
 
@@ -48,18 +48,24 @@ mix dogma      # Check for style violations
 ```
 
 
-## Run the server
+## Run the server (Development)
 
 Run the REPL.
 
 ```sh
-bin/prod_run.sh
+iex -S mix
 ```
 
 You can run the server from the REPL like this:
 
 ```elixir
 Samuel.API.Server.start
+```
+
+or, in one line:
+
+```sh
+elixir -S mix run -e "Samuel.API.Server.start"
 ```
 
 Code is not automatically reloaded.
