@@ -8,8 +8,13 @@ config :samuel,
 
   Good pull requests are **descriptive**, **small** and **short-lived**.
 
-  - [ ] Code has been reviewed.
+  **For the Author**
   - [ ] Description explains what you have done and why.
-  - [ ] Tests are green on CI (or pulled/tested on another machine).
-  - [ ] Documentation has been created or updated.
+  - [ ] Tests have been written (or you have explained why you don't need tests).
+  - [ ] Documentation/comments have been added/updated.
+
+  **For the Reviewer**
+  - [ ] Tests are green on CI (or pulled/tested on your machine).
+  - [ ] Tests cover happy and unhappy paths in the code.
+  - [ ] The code is easy to understand.
   """
