@@ -9,7 +9,7 @@
   "idna": {:hex, :idna, "1.0.2"},
   "inch_ex": {:hex, :inch_ex, "0.4.0"},
   "meck": {:hex, :meck, "0.8.3"},
-  "mix_test_watch": {:hex, :mix_test_watch, "0.1.2"},
+  "mix_test_watch": {:hex, :mix_test_watch, "0.2.3"},
   "mock": {:hex, :mock, "0.1.1"},
   "plug": {:hex, :plug, "0.14.0"},
   "poison": {:hex, :poison, "1.4.0"},
