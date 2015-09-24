@@ -25,5 +25,5 @@ defmodule Samuel.Checks.Guidelines do
   def requirements do
     ~w(guidelines)a
   end
-  
+
 end

@@ -87,7 +87,10 @@ defmodule Samuel.DataProviderTest do
           event,
           MarkdownClient
         )
-        assert data.guidelines == Application.get_env(:samuel, :guidelines_message)
+        assert data.guidelines == Application.get_env(
+          :samuel,
+          :guidelines_message
+        )
       end
     end
   end
