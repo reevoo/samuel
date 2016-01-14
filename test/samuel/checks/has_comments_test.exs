@@ -16,7 +16,8 @@ defmodule Samuel.Checks.HasCommentsTest do
             "full_name" => "reevoo/samuel"
           }
         },
-        comments: [],
+        commit_comments: [],
+        pr_comments: [],
       }
     end
 
@@ -34,7 +35,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with comments from Samuel and the author" do
+  with "a pull request with commit comments from Samuel and the author" do
     setup data do
       %{
         event: %{
@@ -50,10 +51,11 @@ defmodule Samuel.Checks.HasCommentsTest do
             "full_name" => "reevoo/samuel"
           }
         },
-        comments: [
+        commit_comments: [
           %{ "user" => %{ "login" => "reevoo-samuel" } },
           %{ "user" => %{ "login" => "AUTHOR" } },
         ],
+        pr_comments: [],
       }
     end
 
@@ -64,7 +66,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with comments from others" do
+  with "a pull request with commit comments from others" do
     setup data do
       %{
         event: %{
@@ -80,9 +82,10 @@ defmodule Samuel.Checks.HasCommentsTest do
             "full_name" => "reevoo/samuel"
           }
         },
-        comments: [
+        commit_comments: [
           %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
         ],
+        pr_comments: [],
       }
     end
 

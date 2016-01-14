@@ -33,16 +33,19 @@ defmodule Samuel.Checks.HasComments do
   end
 
   def requirements do
-    ~w(comments)a
+    ~w(commit_comments pr_comments)a
   end
 
+  defp all_comments(data) do
+    data.commit_comments ++ data.pr_comments
+  end
 
   # Returns the number of comments made by someone who is not the Pull Request
   # author or Samuel.
   defp other_user_comments(data) do
     users_that_dont_count = users_that_dont_count(data.event)
 
-    data.comments
+    all_comments(data)
     |> Enum.map(fn(c) -> c["user"]["login"] end)
     |> Enum.filter(fn(u) ->
       Enum.all?(users_that_dont_count, fn(n) -> n != u end)

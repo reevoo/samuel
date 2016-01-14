@@ -49,9 +49,17 @@ defmodule Samuel.DataProvider do
   end
 
 
-  defp fetch(:comments, event, http) do
+  defp fetch(:pr_comments, event, http) do
     get(
       event["pull_request"]["comments_url"],
+      %{"Content-Type" => "application/json"},
+      http
+    )
+  end
+
+  defp fetch(:commit_comments, event, http) do
+    get(
+      event["pull_request"]["review_comments_url"],
       %{"Content-Type" => "application/json"},
       http
     )
