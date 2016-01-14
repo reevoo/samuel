@@ -45,7 +45,8 @@ defmodule Samuel.Checks.HasComments do
   defp other_user_comments(data) do
     users_that_dont_count = users_that_dont_count(data.event)
 
-    all_comments(data)
+    data
+    |> all_comments
     |> Enum.map(fn(c) -> c["user"]["login"] end)
     |> Enum.filter(fn(u) ->
       Enum.all?(users_that_dont_count, fn(n) -> n != u end)
