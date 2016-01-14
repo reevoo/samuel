@@ -35,6 +35,65 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
+  with "a pull request with PR comments from Samuel and the author" do
+    setup data do
+      %{
+        event: %{
+          "action" => "closed",
+          "pull_request" => %{
+            "merged" => true,
+            "number" => 6,
+            "user" => %{
+              "login" => "AUTHOR"
+            }
+          },
+          "repository" => %{
+            "full_name" => "reevoo/samuel"
+          }
+        },
+        pr_comments: [
+          %{ "user" => %{ "login" => "reevoo-samuel" } },
+          %{ "user" => %{ "login" => "AUTHOR" } },
+        ],
+        commit_comments: [],
+      }
+    end
+
+    should "return a post comment action", data do
+      action = HasComments.check(data)
+
+      assert action.action == :post_comment
+    end
+  end
+
+  with "a pull request with PR comments from others" do
+    setup data do
+      %{
+        event: %{
+          "action" => "closed",
+          "pull_request" => %{
+            "merged" => true,
+            "number" => 6,
+            "user" => %{
+              "login" => "AUTHOR"
+            }
+          },
+          "repository" => %{
+            "full_name" => "reevoo/samuel"
+          }
+        },
+        pr_comments: [
+          %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
+        ],
+        commit_comments: [],
+      }
+    end
+
+    should "return nil", event do
+      assert nil == HasComments.check(event)
+    end
+  end
+
   with "a pull request with commit comments from Samuel and the author" do
     setup data do
       %{

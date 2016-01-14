@@ -25,7 +25,7 @@ defmodule Samuel.DataProviderTest do
       should "get comments from HTTP" do
         event = %{
           "pull_request" => %{
-            "comments_url" => "COMMIT-COMMENTS-URL"
+            "review_comments_url" => "COMMENTS-URL"
           }
         }
         checks = [
@@ -34,7 +34,7 @@ defmodule Samuel.DataProviderTest do
           }
         ]
         data = DataProvider.resolve_requirements(checks, event, HTTPClient)
-        assert data.commit_comments == "DATA-FOR-COMMIT-COMMENTS-URL"
+        assert data.commit_comments == "DATA-FOR-COMMENTS-URL"
       end
     end
 
@@ -42,7 +42,7 @@ defmodule Samuel.DataProviderTest do
       should "get comments from HTTP" do
         event = %{
           "pull_request" => %{
-            "review_comments_url" => "PR-COMMENTS-URL"
+            "comments_url" => "PR-URL"
           }
         }
         checks = [
@@ -51,7 +51,7 @@ defmodule Samuel.DataProviderTest do
           }
         ]
         data = DataProvider.resolve_requirements(checks, event, HTTPClient)
-        assert data.pr_comments == "DATA-FOR-PR-COMMENTS-URL"
+        assert data.pr_comments == "DATA-FOR-PR-URL"
       end
     end
   end
@@ -72,22 +72,23 @@ defmodule Samuel.DataProviderTest do
 
 
   with "fetch_requirements/3" do
-    with "commit comments" do
 
-      defmodule JSONClient do
-        def get!(url, _) do
-          %{
-            body: ~s({ "url": "#{url}" }),
-            headers: [{ "Content-Type", "application/json; charset=utf8" }]
-          }
-        end
+    # Mock HTTP Client
+    defmodule JSONClient do
+      def get!(url, _) do
+        %{
+          body: ~s({ "url": "#{url}" }),
+          headers: [{ "Content-Type", "application/json; charset=utf8" }]
+        }
       end
+    end
 
+    with "commit comments" do
       should "look up the commit comments URL from the event and fetch data" do
         requirements = [:commit_comments]
         event = %{
           "pull_request" => %{
-            "comments_url" => "COMMIT-COMMENTS-URL"
+            "review_comments_url" => "COMMIT-COMMENTS-URL"
           }
         }
         data = DataProvider.fetch_requirements(requirements, event, JSONClient)
@@ -96,21 +97,11 @@ defmodule Samuel.DataProviderTest do
     end
 
     with "PR comments" do
-
-      defmodule JSONClient do
-        def get!(url, _) do
-          %{
-            body: ~s({ "url": "#{url}" }),
-            headers: [{ "Content-Type", "application/json; charset=utf8" }]
-          }
-        end
-      end
-
-      should "look up the commit comments URL from the event and fetch data" do
+      should "look up the PR comments URL from the event and fetch data" do
         requirements = [:pr_comments]
         event = %{
           "pull_request" => %{
-            "review_comments_url" => "PR-COMMENTS-URL"
+            "comments_url" => "PR-COMMENTS-URL"
           }
         }
         data = DataProvider.fetch_requirements(requirements, event, JSONClient)
