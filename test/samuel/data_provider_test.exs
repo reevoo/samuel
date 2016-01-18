@@ -21,20 +21,37 @@ defmodule Samuel.DataProviderTest do
       end
     end
 
-    with "comments" do
+    with "commit comments" do
       should "get comments from HTTP" do
         event = %{
           "pull_request" => %{
-            "comments_url" => "COMMENTS-URL"
+            "review_comments_url" => "COMMENTS-URL"
           }
         }
         checks = [
           %{
-            requirements: [:comments]
+            requirements: [:commit_comments]
           }
         ]
         data = DataProvider.resolve_requirements(checks, event, HTTPClient)
-        assert data.comments == "DATA-FOR-COMMENTS-URL"
+        assert data.commit_comments == "DATA-FOR-COMMENTS-URL"
+      end
+    end
+
+    with "PR comments" do
+      should "get comments from HTTP" do
+        event = %{
+          "pull_request" => %{
+            "comments_url" => "PR-URL"
+          }
+        }
+        checks = [
+          %{
+            requirements: [:pr_comments]
+          }
+        ]
+        data = DataProvider.resolve_requirements(checks, event, HTTPClient)
+        assert data.pr_comments == "DATA-FOR-PR-URL"
       end
     end
   end
@@ -55,26 +72,40 @@ defmodule Samuel.DataProviderTest do
 
 
   with "fetch_requirements/3" do
-    with "comments" do
 
-      defmodule JSONClient do
-        def get!(url, _) do
-          %{
-            body: ~s({ "url": "#{url}" }),
-            headers: [{ "Content-Type", "application/json; charset=utf8" }]
-          }
-        end
+    # Mock HTTP Client
+    defmodule JSONClient do
+      def get!(url, _) do
+        %{
+          body: ~s({ "url": "#{url}" }),
+          headers: [{ "Content-Type", "application/json; charset=utf8" }]
+        }
       end
+    end
 
-      should "look up the comments URL from the event and fetch data" do
-        requirements = [:comments]
+    with "commit comments" do
+      should "look up the commit comments URL from the event and fetch data" do
+        requirements = [:commit_comments]
         event = %{
           "pull_request" => %{
-            "comments_url" => "COMMENTS-URL"
+            "review_comments_url" => "COMMIT-COMMENTS-URL"
           }
         }
         data = DataProvider.fetch_requirements(requirements, event, JSONClient)
-        assert data.comments == %{"url" => "COMMENTS-URL"}
+        assert data.commit_comments == %{"url" => "COMMIT-COMMENTS-URL"}
+      end
+    end
+
+    with "PR comments" do
+      should "look up the PR comments URL from the event and fetch data" do
+        requirements = [:pr_comments]
+        event = %{
+          "pull_request" => %{
+            "comments_url" => "PR-COMMENTS-URL"
+          }
+        }
+        data = DataProvider.fetch_requirements(requirements, event, JSONClient)
+        assert data.pr_comments == %{"url" => "PR-COMMENTS-URL"}
       end
     end
 
