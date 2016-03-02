@@ -72,7 +72,11 @@ Code is not automatically reloaded.
 
 ## Deploy it
 
-We're using Heroku for now...
+Use this button:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+If it doesn't work, pull the repository and try this:
 
 ```sh
 git remote add heroku [HEROKU_URL]
