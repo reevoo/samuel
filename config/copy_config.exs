@@ -2,9 +2,10 @@ use Mix.Config
 
 config :samuel,
   guidelines_message: """
-  *If you're new, read the [guidelines](https://github.com/reevoo/guidelines/blob/master/pull_requests.md).*
+  *If you're new, read the [guidelines]
+  (https://github.com/reevoo/guidelines/blob/master/pull_requests.md).*
 
-  Good code is **tested**, **designed for change**, **easy to understand** 
+  Good code is **tested**, **designed for change**, **easy to understand**
   and **able to cope when things go wrong**.
 
   Good pull requests are **descriptive**, **small** and **short-lived**.
@@ -20,4 +21,10 @@ config :samuel,
   - [ ] The code is easy to understand.
   - [ ] Tests cover happy and unhappy paths in the code.
   - [ ] Tests are green on CI (or pulled/tested on your machine).
+  """,
+
+  old_pr_message: """
+  Er, hello?
+
+  This Pull Request is too damn old! Merge or close this, sucka.
   """

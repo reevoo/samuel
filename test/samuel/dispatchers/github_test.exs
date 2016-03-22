@@ -9,14 +9,13 @@ defmodule Samuel.Dispatchers.GithubTest do
     setup context do
       actions = [%Action{
         action: :post_comment,
-        repo: "REPO",
-        pull_id: 123,
+        comments_url: "COMMENTS-URL",
         message: "Hello, world!"
       }]
 
       mock = [
         post!: fn(url, _, headers) ->
-          assert url == "https://api.github.com/repos/REPO/issues/123/comments"
+          assert url == "COMMENTS-URL"
           assert headers == [
             { "Authorization", "token DUMMY-GITHUB-ACCESS-KEY" }
           ]

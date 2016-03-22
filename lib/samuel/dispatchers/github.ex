@@ -9,14 +9,17 @@ defmodule Samuel.Dispatchers.Github do
     Enum.map(actions, &process_action(&1, http))
   end
 
-
   defp process_action(%{action: :post_comment} = action, http) do
-    repo = action.repo
-    pull = action.pull_id
-    json = Poison.encode!(%{ body: action.message })
+    post(
+      action.comments_url,
+      action.message,
+      http
+    )
+  end
 
-    "https://api.github.com/repos/#{repo}/issues/#{pull}/comments"
-    |> http.post!(json, auth_headers)
+  defp post(url, message, http) do
+    json = Poison.encode!(%{ body: message })
+    http.post!(url, json, auth_headers)
   end
 
   defp access_token do

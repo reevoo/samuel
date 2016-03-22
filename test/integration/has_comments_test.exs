@@ -11,13 +11,10 @@ defmodule Samuel.Integration.HasCommentsTest do
         "action" => "closed",
         "pull_request" => %{
           "merged" => true,
-          "number" => "1",
           "user" => %{
             "login" => "AUTHOR"
-          }
-        },
-        "repository" => %{
-          "full_name" => "reevoo/samuel",
+          },
+          "comments_url" => "COMMENTS-URL"
         }
       }
       %{ event: event }
@@ -32,8 +29,7 @@ defmodule Samuel.Integration.HasCommentsTest do
             headers: [{"Content-Type", "application/json"}]
           } end,
           post!: fn(url, _, headers) ->
-            assert url == "https://api.github.com/"
-                          <> "repos/reevoo/samuel/issues/1/comments"
+            assert url == "COMMENTS-URL"
             assert headers == [
               {"Authorization", "token DUMMY-GITHUB-ACCESS-KEY"}
             ]

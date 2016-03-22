@@ -8,23 +8,17 @@ defmodule Samuel.API do
   See https://developer.github.com/v3/activity/events/types/ for types.
   """
 
-  alias Samuel.Checks
-  alias Samuel.DataProvider
-  alias Samuel.Dispatchers
+  alias Samuel.Events
 
   use Plug.Router
-
   plug Plug.Parsers, parsers: [:json], json_decoder: Poison
   plug :match
   plug :dispatch
 
   post "/hook" do
-    event  = conn.body_params
-    checks = event |> Checks.suitable_checks
-    data   = checks |> DataProvider.resolve_requirements(event)
+    actions = Events.respond(conn.body_params)
 
-    Checks.perform_checks(checks, data)
-    |> Dispatchers.perform_actions!
+    actions
     |> case do
       [] ->
         send_resp(conn, 200, "No actions.")

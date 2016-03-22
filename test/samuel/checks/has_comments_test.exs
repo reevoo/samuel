@@ -3,18 +3,15 @@ defmodule Samuel.Checks.HasCommentsTest do
 
   alias Samuel.Checks.HasComments
 
-  having "a pull request havingout comments" do
+  having "a pull request without comments" do
     setup data do
       %{
         event: %{
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6
+            "comments_url" => "COMMENTS-URL"
           },
-          "repository" => %{
-            "full_name" => "reevoo/samuel"
-          }
         },
         commit_comments: [],
         pr_comments: [],
@@ -27,29 +24,25 @@ defmodule Samuel.Checks.HasCommentsTest do
       assert action.action == :post_comment
     end
 
-    should "get the repo and pull request ID", data do
+    should "get the comments URL", data do
       action = HasComments.check(data)
 
-      assert action.repo == "reevoo/samuel"
-      assert action.pull_id == 6
+      assert action.comments_url == "COMMENTS-URL"
     end
   end
 
-  having "a pull request having PR comments from Samuel and the author" do
+  having "a pull request with PR comments from Samuel and the author" do
     setup data do
       %{
         event: %{
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6,
             "user" => %{
               "login" => "AUTHOR"
-            }
+            },
+            "comments_url" => "COMMENTS-URL"
           },
-          "repository" => %{
-            "full_name" => "reevoo/samuel"
-          }
         },
         pr_comments: [
           %{ "user" => %{ "login" => "reevoo-samuel" } },
@@ -66,21 +59,18 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  having "a pull request having PR comments from others" do
+  having "a pull request with PR comments from others" do
     setup data do
       %{
         event: %{
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6,
             "user" => %{
               "login" => "AUTHOR"
-            }
+            },
+            "comments_url" => "COMMENTS-URL"
           },
-          "repository" => %{
-            "full_name" => "reevoo/samuel"
-          }
         },
         pr_comments: [
           %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
@@ -94,21 +84,18 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  having "a pull request having commit comments from Samuel and the author" do
+  having "a pull request with commit comments from Samuel and the author" do
     setup data do
       %{
         event: %{
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6,
             "user" => %{
               "login" => "AUTHOR"
-            }
+            },
+            "comments_url" => "COMMENTS-URL"
           },
-          "repository" => %{
-            "full_name" => "reevoo/samuel"
-          }
         },
         commit_comments: [
           %{ "user" => %{ "login" => "reevoo-samuel" } },
@@ -125,21 +112,18 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  having "a pull request having commit comments from others" do
+  having "a pull request with commit comments from others" do
     setup data do
       %{
         event: %{
           "action" => "closed",
           "pull_request" => %{
             "merged" => true,
-            "number" => 6,
             "user" => %{
               "login" => "AUTHOR"
-            }
+            },
+            "comments_url" => "COMMENTS-URL"
           },
-          "repository" => %{
-            "full_name" => "reevoo/samuel"
-          }
         },
         commit_comments: [
           %{ "user" => %{ "login" => "SOMEBODY-ELSE" } },
