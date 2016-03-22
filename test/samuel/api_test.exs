@@ -3,7 +3,7 @@ defmodule Samuel.APITest do
   import ShouldI.Matchers.Plug
   alias Samuel.TestHelpers.API
 
-  with "get /status" do
+  having "get /status" do
     setup context do
       %{
         connection: API.request(:get, "/status")
@@ -14,7 +14,7 @@ defmodule Samuel.APITest do
   end
 
 
-  with "non matching endpoint" do
+  having "non matching endpoint" do
     setup context do
       %{
         connection: API.request(:get, "/what-is-this?")
@@ -24,8 +24,8 @@ defmodule Samuel.APITest do
   end
 
 
-  with "post /hook" do
-    with "a known action" do
+  having "post /hook" do
+    having "a known action" do
       setup context do
         %{
           connection: API.request(:post, "/hook", %{"action" => "ping"})
@@ -34,7 +34,7 @@ defmodule Samuel.APITest do
       should_respond_with :success
     end
 
-    with "an unknown action" do
+    having "an unknown action" do
       setup context do
         con = API.request(:post, "/hook", %{"action" => "magic unicorn"})
         %{

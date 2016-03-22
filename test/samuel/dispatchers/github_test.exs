@@ -5,7 +5,7 @@ defmodule Samuel.Dispatchers.GithubTest do
   alias Samuel.Action
   alias Samuel.Dispatchers.Github
 
-  with "post comment action" do
+  having "post comment action" do
     setup context do
       actions = [%Action{
         action: :post_comment,

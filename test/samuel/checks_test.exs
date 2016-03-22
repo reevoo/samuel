@@ -4,21 +4,21 @@ defmodule Samuel.ChecksTest do
 
   alias Samuel.Checks
 
-  with "ping action" do
+  having "ping action" do
     should "return no checks" do
       event = %{ "action" => "ping" }
       assert [] = Checks.suitable_checks( event )
     end
   end
 
-  with "an unknown action" do
+  having "an unknown action" do
     should "return no checks" do
       event = %{ "action" => "wibble wobble" }
       assert [] = Checks.suitable_checks( event )
     end
   end
 
-  with "a merge" do
+  having "a merge" do
     should "returns checks" do
       event = %{
         "action" => "closed",
@@ -33,7 +33,7 @@ defmodule Samuel.ChecksTest do
     end
   end
 
-  with "a non-merged close event" do
+  having "a non-merged close event" do
     should "return no checks" do
       event = %{
         "action" => "closed",
