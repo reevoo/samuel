@@ -13,15 +13,15 @@ defmodule Samuel.DataProviderTest do
     end
   end
 
-  with "resolve_requirements/3" do
-    with "no checks" do
+  having "resolve_requirements/3" do
+    having "no checks" do
       should "return the event only" do
         data = DataProvider.resolve_requirements([], %{}, HTTPClient)
         assert data.event == %{}
       end
     end
 
-    with "commit comments" do
+    having "commit comments" do
       should "get comments from HTTP" do
         event = %{
           "pull_request" => %{
@@ -38,7 +38,7 @@ defmodule Samuel.DataProviderTest do
       end
     end
 
-    with "PR comments" do
+    having "PR comments" do
       should "get comments from HTTP" do
         event = %{
           "pull_request" => %{
@@ -57,8 +57,8 @@ defmodule Samuel.DataProviderTest do
   end
 
 
-  with "determine_requirements/1" do
-    should "query the given checks for requirements, without dupes" do
+  having "determine_requirements/1" do
+    should "query the given checks for requirements, havingout dupes" do
       checks = [
         %{ requirements: ~w(foo)a },
         %{ requirements: ~w(foo bar)a },
@@ -71,7 +71,7 @@ defmodule Samuel.DataProviderTest do
   end
 
 
-  with "fetch_requirements/3" do
+  having "fetch_requirements/3" do
 
     # Mock HTTP Client
     defmodule JSONClient do
@@ -83,7 +83,7 @@ defmodule Samuel.DataProviderTest do
       end
     end
 
-    with "commit comments" do
+    having "commit comments" do
       should "look up the commit comments URL from the event and fetch data" do
         requirements = [:commit_comments]
         event = %{
@@ -96,7 +96,7 @@ defmodule Samuel.DataProviderTest do
       end
     end
 
-    with "PR comments" do
+    having "PR comments" do
       should "look up the PR comments URL from the event and fetch data" do
         requirements = [:pr_comments]
         event = %{
@@ -109,7 +109,7 @@ defmodule Samuel.DataProviderTest do
       end
     end
 
-    with "guidelines" do
+    having "guidelines" do
       should "look up the comments URL from the event and fetch data" do
         requirements = [:guidelines]
         event = nil

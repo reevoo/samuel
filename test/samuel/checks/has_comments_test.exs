@@ -3,7 +3,7 @@ defmodule Samuel.Checks.HasCommentsTest do
 
   alias Samuel.Checks.HasComments
 
-  with "a pull request without comments" do
+  having "a pull request havingout comments" do
     setup data do
       %{
         event: %{
@@ -35,7 +35,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with PR comments from Samuel and the author" do
+  having "a pull request having PR comments from Samuel and the author" do
     setup data do
       %{
         event: %{
@@ -66,7 +66,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with PR comments from others" do
+  having "a pull request having PR comments from others" do
     setup data do
       %{
         event: %{
@@ -94,7 +94,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with commit comments from Samuel and the author" do
+  having "a pull request having commit comments from Samuel and the author" do
     setup data do
       %{
         event: %{
@@ -125,7 +125,7 @@ defmodule Samuel.Checks.HasCommentsTest do
     end
   end
 
-  with "a pull request with commit comments from others" do
+  having "a pull request having commit comments from others" do
     setup data do
       %{
         event: %{

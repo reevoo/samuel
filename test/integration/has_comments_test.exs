@@ -4,7 +4,7 @@ defmodule Samuel.Integration.HasCommentsTest do
 
   alias Samuel.TestHelpers.API
 
-  with "a pull request is closed" do
+  having "a pull request is closed" do
 
     setup context do
       event = %{
@@ -23,7 +23,7 @@ defmodule Samuel.Integration.HasCommentsTest do
       %{ event: event }
     end
 
-    with "no comments" do
+    having "no comments" do
 
       setup context do
         Dict.put(context, :mocks, [
@@ -50,7 +50,7 @@ defmodule Samuel.Integration.HasCommentsTest do
 
     end
 
-    with "comments from other users" do
+    having "comments from other users" do
 
       setup context do
         Dict.put(context, :mocks, [

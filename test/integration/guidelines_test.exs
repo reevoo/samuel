@@ -4,7 +4,7 @@ defmodule Samuel.Integration.GuidelinesTest do
 
   alias Samuel.TestHelpers.API
 
-  with "a pull request is opened" do
+  having "a pull request is opened" do
     setup context do
       mocks = [
         get!:  fn(_, _)    -> %{

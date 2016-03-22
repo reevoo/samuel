@@ -2,7 +2,7 @@ defmodule Samuel.Dispatchers.LoggerTest do
   use ShouldI
   # import ExUnit.CaptureIO
 
-  with "an action" do
+  having "an action" do
     setup context do
       Dict.put context, :actions, [%{
         action: :post_comment,

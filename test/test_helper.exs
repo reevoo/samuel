@@ -11,14 +11,19 @@ defmodule Samuel.TestHelpers.API do
   def request(method, path, args \\ "")
 
   def request(:post, path, args) do
-    args = Poison.Encoder.encode(args, []) |> to_string
-    conn(:post, path, args)
+    args
+    |> Poison.Encoder.encode([])
+    |> to_string
+
+    connection = conn(:post, path, args)
+    connection
     |> put_req_header("content-type", "application/json")
     |> API.call(@opts)
   end
 
   def request(method, path, args) do
-    conn(method, path, args)
+    connection = conn(method, path, args)
+    connection
     |> API.call(@opts)
   end
 end
