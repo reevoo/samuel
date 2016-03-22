@@ -14,10 +14,10 @@ Samuel is here to make sure your pull requests are all they can be.
 
 * Post pull request guidelines to your pull request.
 * Moan at you if you merge your pull request without code review.
+* Moan at you if you leave your pull requests open for a long time.
 
 ## What He Will Do In The Future
 
-* Moan at you if you leave your pull requests open for a long time.
 * Moan at you if you commit directly to master.
 
 
@@ -69,6 +69,14 @@ elixir -S mix run -e "Samuel.API.Server.start"
 ```
 
 Code is not automatically reloaded.
+
+## Run the cron jobs
+
+Some checks are done daily. To run them, do this:
+
+```sh
+mix do app.start, daily_checks
+```
 
 ## Deploy it
 

@@ -22,7 +22,7 @@ defmodule Samuel.Checks do
   """
   def perform_checks(checks, %{event: _} = data) do
     checks
-    |> Enum.map(fn(module) -> module.check(data) end)
+    |> Enum.flat_map(fn(module) -> module.check(data) end)
   end
 
 
@@ -48,6 +48,12 @@ defmodule Samuel.Checks do
   defp suitable_checks("closed", %{"pull_request" => %{"merged" => true}}) do
     [
       Samuel.Checks.HasComments
+    ]
+  end
+
+  defp suitable_checks("daily", _) do
+    [
+      Samuel.Checks.Old
     ]
   end
 

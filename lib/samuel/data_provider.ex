@@ -65,8 +65,24 @@ defmodule Samuel.DataProvider do
     )
   end
 
+  defp fetch(:open_prs, _, http) do
+    org = Application.get_env(:samuel, :github_org_name)
+    open_prs_url = "https://api.github.com/search/issues" <>
+      "?q=type:pr+state:open+user:#{org}"
+
+    get(
+      open_prs_url,
+      %{"Content-Type" => "application/json"},
+      http
+    )
+  end
+
   defp fetch(:guidelines, _, _) do
     Application.get_env(:samuel, :guidelines_message)
+  end
+
+  defp fetch(:old_pr_message, _, _) do
+    Application.get_env(:samuel, :old_pr_message)
   end
 
   defp get(url, headers, http) do

@@ -21,7 +21,7 @@ defmodule Samuel.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [
-      applications: [:logger, :httpoison],
+      applications: [:logger, :httpoison, :tzdata],
       mod: {Samuel, []}
     ]
   end
@@ -36,6 +36,8 @@ defmodule Samuel.Mixfile do
       {:poison, "~> 1.5"},
       # HTTP Client
       {:httpoison, "~> 0.7"},
+      # Timey wimey stuff
+      {:timex, "~> 2.1"},
 
       # BDD test macros
       {:shouldi, "~> 0.3", only: :test},
