@@ -15,16 +15,6 @@ defmodule Samuel.Check do
   """
   defcallback check(pull_request_data)  :: none | action
 
-
-  @doc """
-  A function that returns the action that needs to be taken for an event,
-  *presuming that the event fails the check*.
-
-  It should not test to see if it fails or not.
-  """
-  defcallback action(pull_request_data) :: action
-
-
   @doc """
   A function that returns a list of the requirements of the checker that must
   be resolved and added to the `pull_request_data` before `check/1` has

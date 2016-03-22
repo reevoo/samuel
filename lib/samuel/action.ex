@@ -4,8 +4,7 @@ defmodule Samuel.Action do
   """
 
   defstruct action: nil,
-    repo: nil,
-    pull_id: nil,
+    comments_url: nil,
     message: nil
 
 end

@@ -13,11 +13,9 @@ defmodule Samuel.Checks.Guidelines do
   end
 
   def action(data) do
-
     %Action{
       action: :post_comment,
-      repo: data.event["repository"]["full_name"],
-      pull_id: data.event["pull_request"]["number"],
+      comments_url: data.event["pull_request"]["comments_url"],
       message: data.guidelines
     }
   end
