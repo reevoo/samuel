@@ -22,7 +22,7 @@ defmodule Samuel.Checks do
   """
   def perform_checks(checks, %{event: _} = data) do
     checks
-    |> Enum.flat_map(fn(module) -> module.check(data) end)
+    |> Enum.flat_map(fn(module) -> check_and_ensure_list(module, data) end)
   end
 
 
@@ -59,5 +59,13 @@ defmodule Samuel.Checks do
 
   defp suitable_checks(_, _) do
     []
+  end
+
+  defp check_and_ensure_list(module, data) do
+    actions = module.check(data)
+    case actions do
+      a when is_list(a) -> a
+      a -> [a]
+    end
   end
 end
